@@ -4,27 +4,45 @@
       <h1 class="text-2xl font-bold text-center text-gray-800 mb-1.5">Login</h1>
       <p class="text-center text-gray-500 mb-6">Please log in to access and manage your party details</p>
 
-      <form class="space-y-4">
-        <!-- Username -->
+      <form [formGroup]="loginForm" (ngSubmit)="loginUser()" class="space-y-4">
+        <!-- Email -->
         <mat-form-field appearance="outline" class="w-full">
-          <!-- <mat-label>Username</mat-label> -->
-          <input matInput placeholder="Enter username" formControlName="username" />
+          <input matInput placeholder="Enter email" formControlName="username" />
+          <mat-error
+            *ngIf="loginForm.get('username')?.invalid && (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)">
+            <ng-container *ngIf="loginForm.get('username')?.hasError('required')">
+              Email is required
+            </ng-container>
+            <ng-container *ngIf="loginForm.get('username')?.hasError('email')">
+              Please enter a valid email (e.g. abc123&#64;gmail.com)
+            </ng-container>
+          </mat-error>
         </mat-form-field>
 
         <!-- Password -->
         <mat-form-field appearance="outline" class="w-full">
-          <!-- <mat-label>Password</mat-label> -->
-          <input matInput type="password" placeholder="Enter password" />
-          <!-- <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
-                    Password is required
-                </mat-error> -->
+          <input matInput type="password" placeholder="Enter password" formControlName="password" />
+          <mat-error
+            *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+            <ng-container *ngIf="loginForm.get('password')?.hasError('required')">
+              Password is required
+            </ng-container>
+            <ng-container *ngIf="loginForm.get('password')?.hasError('minlength')">
+              Password must be at least 6 characters
+            </ng-container>
+          </mat-error>
         </mat-form-field>
 
-        <!-- Submit Button -->
-        <button mat-raised-button color="primary"
-          class="w-full !py-2 !bg-indigo-600 !hover:bg-indigo-700 !text-white !rounded-sm">
+        <!-- Button -->
+        <button mat-raised-button color="primary" type="submit"
+          class="w-full !py-2 !rounded-md !text-white font-medium transition duration-200"
+          [disabled]="loginForm.invalid" [ngClass]="{
+            '!bg-indigo-600 hover:!bg-indigo-700 cursor-pointer shadow-md': !loginForm.invalid,
+            '!bg-slate-300 !text-slate-500 cursor-not-allowed shadow-none': loginForm.invalid
+          }">
           Login
         </button>
+
       </form>
     </mat-card>
   </div>
