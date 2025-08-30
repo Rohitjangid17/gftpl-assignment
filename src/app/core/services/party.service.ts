@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_URL } from '../../shared/constants';
+import { Observable } from 'rxjs';
+import { Party } from '../interfaces/party';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ export class PartyService {
   ) { }
 
   // get parties
-  getParties() {
-    return this._httpClient.get(`${API_URL}party/`);
+  getParties(): Observable<Party[]> {
+    return this._httpClient.get<Party[]>(`${API_URL}party/`);
   }
 }

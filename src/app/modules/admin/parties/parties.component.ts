@@ -5,36 +5,64 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { PartyService } from '../../../core/services/party.service';
 import { BreadcrumbComponent } from '../../../shared/components/breadcrumb/breadcrumb.component';
+import { Party } from '../../../core/interfaces/party';
+import { LoaderComponent } from '../../../shared/components/loader/loader.component';
 
 @Component({
   selector: 'app-parties',
-  imports: [CommonModule, MatTableModule, MatIconModule, MatButtonModule, BreadcrumbComponent],
+  imports: [CommonModule, MatTableModule, MatIconModule, MatButtonModule, BreadcrumbComponent, LoaderComponent],
   templateUrl: './parties.component.html',
   styleUrl: './parties.component.scss'
 })
 export class PartiesComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'location', 'date', 'actions'];
+  displayedColumns: string[] = ['name',
+    'company_name',
+    'mobile_no',
+    'email',
+    'gstin',
+    'date_of_birth',
+    'anniversary_date',
+    'actions'];
 
-  parties = [
-    { name: 'Birthday Bash', location: 'New York', date: new Date('2025-09-01') },
-    { name: 'Wedding Ceremony', location: 'Los Angeles', date: new Date('2025-09-10') },
-    { name: 'Corporate Meetup', location: 'Chicago', date: new Date('2025-09-20') }
-  ];
+  parties: Party[] = [];
+  isLoader: boolean = false;
 
   constructor(
     private _partyService: PartyService
   ) { }
 
   ngOnInit(): void {
-    // Fetch parties data on component initialization
-    this._partyService.getParties().subscribe((data: any) => {
-      console.log(data);
+    this.getPartyList();
+  }
+
+  // Fetch the list of parties
+  getPartyList() {
+    this.isLoader = true;
+
+    this._partyService.getParties().subscribe({
+      next: (response: Party[]) => {
+        this.parties = response;
+        console.log("parties list ", this.parties);
+        this.isLoader = false;
+      },
+      error: (error) => {
+        console.error('Error fetching parties:', error);
+        this.isLoader = false;
+      },
     });
   }
 
-  getPartyList() {
-    this._partyService.getParties().subscribe((response) => {
-      console.log("parties list ", response)
-    });
+  // Create a new party
+  createParty() {
+    // Logic to create a new party
   }
+
+  updateParty(party: Party) {
+    // Logic to update the party
+  }
+
+  deleteParty(party: Party) {
+    // Logic to delete the party
+  }
+
 }
