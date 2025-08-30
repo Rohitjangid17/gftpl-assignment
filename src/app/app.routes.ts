@@ -9,7 +9,7 @@ export const routes: Routes = [
       import('./modules/auth/auth.routes').then((m) => m.AUTH_ROUTES),
   },
   {
-    path: 'parties',
+    path: '',
     canActivate: [authGuard],
     loadChildren: () =>
       import('./modules/admin/parties/parties.routes').then((m) => m.PARTIES_ROUTES),

@@ -7,10 +7,11 @@ import { PartyService } from '../../../core/services/party.service';
 import { BreadcrumbComponent } from '../../../shared/components/breadcrumb/breadcrumb.component';
 import { Party } from '../../../core/interfaces/party';
 import { LoaderComponent } from '../../../shared/components/loader/loader.component';
+import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-parties',
-  imports: [CommonModule, MatTableModule, MatIconModule, MatButtonModule, BreadcrumbComponent, LoaderComponent],
+  imports: [CommonModule, MatTableModule, MatIconModule, MatButtonModule, MatButtonModule, BreadcrumbComponent, RouterModule, LoaderComponent, RouterLink],
   templateUrl: './parties.component.html',
   styleUrl: './parties.component.scss'
 })
@@ -22,6 +23,7 @@ export class PartiesComponent implements OnInit {
     'gstin',
     'date_of_birth',
     'anniversary_date',
+    'is_active',
     'actions'];
 
   parties: Party[] = [];
