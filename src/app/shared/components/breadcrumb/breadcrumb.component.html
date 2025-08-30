@@ -1,0 +1,27 @@
+<div class="mb-4">
+  <!-- Title -->
+  <h1 class="text-2xl font-medium text-gray-800 mb-1">
+    {{ title }}
+  </h1>
+
+  <!-- Breadcrumb -->
+  <nav class="text-sm text-gray-500">
+    <ol class="flex list-none p-0">
+      <ng-container *ngFor="let breadcrumb of breadcrumbs; let last = last">
+        <li>
+          <ng-container *ngIf="!last && breadcrumb.url">
+            <a [routerLink]="breadcrumb.url" class="text-black">
+              {{ breadcrumb.label }}
+            </a>
+          </ng-container>
+          <ng-container *ngIf="last || !breadcrumb.url">
+            <span class="font-semibold">{{ breadcrumb.label }}</span>
+          </ng-container>
+          <ng-container *ngIf="!last">
+            <span class="mx-2">/</span>
+          </ng-container>
+        </li>
+      </ng-container>
+    </ol>
+  </nav>
+</div>
