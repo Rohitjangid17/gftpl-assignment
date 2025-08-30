@@ -5,16 +5,13 @@
       <p class="text-center text-gray-500 mb-6">Please log in to access and manage your party details</p>
 
       <form [formGroup]="loginForm" (ngSubmit)="loginUser()" class="space-y-4">
-        <!-- Email -->
+        <!-- Username -->
         <mat-form-field appearance="outline" class="w-full">
-          <input matInput placeholder="Enter email" formControlName="username" />
+          <input matInput placeholder="Enter username" formControlName="username" />
           <mat-error
             *ngIf="loginForm.get('username')?.invalid && (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)">
             <ng-container *ngIf="loginForm.get('username')?.hasError('required')">
-              Email is required
-            </ng-container>
-            <ng-container *ngIf="loginForm.get('username')?.hasError('email')">
-              Please enter a valid email (e.g. abc123&#64;gmail.com)
+              username is required
             </ng-container>
           </mat-error>
         </mat-form-field>
@@ -45,5 +42,7 @@
 
       </form>
     </mat-card>
+
+    <app-loader [loading]="isLoader" />
   </div>
 </div>

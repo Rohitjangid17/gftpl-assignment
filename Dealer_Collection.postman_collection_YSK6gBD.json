@@ -1,547 +1,547 @@
 {
-	"info": {
-		"_postman_id": "7e8528d7-fbc5-4bc5-bd5f-00f5ac8b33b9",
-		"name": "Dealer Collection",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23043473",
-		"username": "gftpl",
-		"passwd": "aZh#pl|20^45" 
-	},
-	"item": [
-		{
-			"name": "Authentication",
-			"item": [
-				{
-					"name": "login",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "username",
-									"value": "gftpl",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "aZh#pl|20^45",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{urls}}login/",
-							"host": [
-								"{{urls}}login"
-							],
-							"path": [
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "logout",
-					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "Token 0b17a96a0624824843d921ae5ba83f421042c71e",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "Authorization",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "token 537a0c68599890919f263f4fde6affd8604e884e"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"url": {
-							"raw": "{{urls}}logout/",
-							"host": [
-								"{{urls}}logout"
-							],
-							"path": [
-								""
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "DEALER",
-			"item": [
-				{
-					"name": "Get",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{urls}}party/",
-							"host": [
-								"{{urls}}party"
-							],
-							"path": [
-								""
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1",
-									"description": "Optional (Integer)",
-									"disabled": true
-								},
-								{
-									"key": "page_size",
-									"value": "4",
-									"description": "Optional (Integer)",
-									"disabled": true
-								},
-								{
-									"key": "is_active",
-									"value": "False",
-									"description": "Optional (Boolean) True/False , is_active => is workingwhen Page and Page Size are filled ",
-									"disabled": true
-								},
-								{
-									"key": "search",
-									"value": "Test",
-									"description": "Optional (String) Search is active when Page and Page Size are filled ",
-									"disabled": true
-								},
-								{
-									"key": "id",
-									"value": "9",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Post",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "login_access",
-									"value": "True",
-									"description": "Boolen True/False",
-									"type": "text"
-								},
-								{
-									"key": "name",
-									"value": "rahul sir asawati ",
-									"description": "String",
-									"type": "text"
-								},
-								{
-									"key": "company_name",
-									"value": "amdocs",
-									"description": "String",
-									"type": "text"
-								},
-								{
-									"key": "mobile_no",
-									"value": "7838073412",
-									"description": "String",
-									"type": "text"
-								},
-								{
-									"key": "telephone_no",
-									"value": "7418529630",
-									"description": "String",
-									"type": "text"
-								},
-								{
-									"key": "whatsapp_no",
-									"value": "7418529630",
-									"description": "String",
-									"type": "text"
-								},
-								{
-									"key": "remark",
-									"value": "7410852063",
-									"description": "String",
-									"type": "text"
-								},
-								{
-									"key": "date_of_birth",
-									"value": "2002-10-10",
-									"description": "Date",
-									"type": "text"
-								},
-								{
-									"key": "anniversary_date",
-									"value": "2002-10-10",
-									"description": "Date",
-									"type": "text"
-								},
-								{
-									"key": "gst_type",
-									"value": "UnRegistered",
-									"description": "UnRegistered/Registered Regular/Registered Composition/Input Service Distributor/Ecommerce Operator",
-									"type": "text"
-								},
-								{
-									"key": "gstin",
-									"value": "MMMMMMMMM",
-									"description": "String",
-									"type": "text"
-								},
-								{
-									"key": "pan_no",
-									"value": "EDRFGVHB45",
-									"description": "String",
-									"type": "text"
-								},
-								{
-									"key": "apply_tds",
-									"value": "True",
-									"description": "Boolean True/False",
-									"type": "text"
-								},
-								{
-									"key": "credit_limit",
-									"value": "455",
-									"description": "Integer",
-									"type": "text"
-								},
-								{
-									"key": "address",
-									"value": "[\n     {\n  \"address_line_1\": \"123 Street\",\n  \"address_line_2\": \"Apt 4\",\n  \"country\": 1,\n  \"state\": 1,\n  \"city\": 1,\n  \"pincode\": \"90001\",\n  \"address_type\": \"Shipping\"\n},\n{\n  \"address_line_1\": \"456 Road\",\n  \"address_line_2\": \"Unit 8\",\n  \"country\": 2,\n  \"state\": 1,\n  \"city\": 1,\n  \"pincode\": \"10001\",\n  \"address_type\": \"Billing\"\n},\n{\n  \"address_line_1\": \"321 Lane\",\n  \"address_line_2\": \"Suite 10\",\n  \"country\": 1,\n  \"state\": 1,\n  \"city\": 1,  \n   \"pincode\": \"78701\",\n  \"address_type\": \"Billing\"\n}\n]",
-									"description": "All Field String Except Pincode pincode is Integer",
-									"type": "text"
-								},
-								{
-									"key": "bank_id",
-									"value": "[\n  {\n    'bank_ifsc_code': 'IFSC1',\n    'bank_name': 'Bank 1',\n    'branch_name': 'Branch 1',\n    'account_no': '1234567890',\n    'account_holder_name': 'Holder 1'\n},\n\n {\n    'bank_ifsc_code': 'IFSC2',\n    'bank_name': 'Bank 2',\n    'branch_name': 'Branch 2',\n    'account_no': '2345678901',\n    'account_holder_name': 'Holder 2'\n},\n{\n    'bank_ifsc_code': 'IFSC3',\n    'bank_name': 'Bank 3',\n    'branch_name': 'Branch 3',\n    'account_no': '3456789012',\n    'account_holder_name': 'Holder 3'\n}\n]",
-									"description": "All Field String Except Pincode pincode is Integer",
-									"type": "text"
-								},
-								{
-									"key": "opening_balance",
-									"value": "100",
-									"description": "Integer",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "sharmaujjwal0921@gmail.com",
-									"description": "Email",
-									"type": "text"
-								},
-								{
-									"key": "membership",
-									"value": "membership",
-									"description": "String",
-									"type": "text"
-								},
-								{
-									"key": "opening_balance_type",
-									"value": "Cr",
-									"description": "Cr/Dr",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{urls}}party/",
-							"host": [
-								"{{urls}}party"
-							],
-							"path": [
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "login_access",
-									"value": "True",
-									"type": "text"
-								},
-								{
-									"key": "name",
-									"value": "UJJWAL",
-									"type": "text"
-								},
-								{
-									"key": "company_name",
-									"value": "SERDTFGHH",
-									"type": "text"
-								},
-								{
-									"key": "mobile_no",
-									"value": "783807345241",
-									"type": "text"
-								},
-								{
-									"key": "telephone_no",
-									"value": "56251221",
-									"type": "text"
-								},
-								{
-									"key": "whatsapp_no",
-									"value": "7418529630",
-									"type": "text"
-								},
-								{
-									"key": "remark",
-									"value": "7410852063",
-									"type": "text"
-								},
-								{
-									"key": "date_of_birth",
-									"value": "2002-10-11",
-									"type": "text"
-								},
-								{
-									"key": "anniversary_date",
-									"value": "2002-10-11",
-									"type": "text"
-								},
-								{
-									"key": "gst_type",
-									"value": "UnRegistered",
-									"type": "text"
-								},
-								{
-									"key": "gstin",
-									"value": "ABCDA11",
-									"type": "text"
-								},
-								{
-									"key": "pan_no",
-									"value": "EDRFGVHB45",
-									"type": "text"
-								},
-								{
-									"key": "apply_tds",
-									"value": "True",
-									"type": "text"
-								},
-								{
-									"key": "credit_limit",
-									"value": "455",
-									"type": "text"
-								},
-								{
-									"key": "address",
-									"value": "[\n    {\n      \"id\": 26,\n      \"address_line_1\": \"Haryana 001 Street\",\n      \"address_line_2\": \"AAAAAAApt 4\",\n      \"country\": 2,\n      \"state\": 1,\n      \"city\": 1,\n      \"pincode\": \"90001\",\n      \"address_type\": \"Shipping\"\n    },\n    {\n      \"address_line_1\": \"456 Road\",\n      \"address_line_2\": \"Unit 8\",\n      \"country\": 1,\n      \"state\": 1,\n      \"city\": 1,\n      \"pincode\": \"10001\",\n      \"address_type\": \"Billing\"\n    },\n    {\n      \"address_line_1\": \"321 Lane\",\n      \"address_line_2\": \"Suite 10\",\n      \"country\": 1,\n      \"state\": 1,\n      \"city\": 1,\n      \"pincode\": \"78701\",\n      \"address_type\": \"Billing\"\n    }\n  ]",
-									"type": "text"
-								},
-								{
-									"key": "bank_id",
-									"value": "[\n    {\n      \"id\": 28,\n      \"bank_ifsc_code\": \"updated\",\n      \"bank_name\": \"Bank 1 Union\",\n      \"branch_name\": \"Branch 1\",\n      \"account_no\": \"ABCD1234567890\",\n      \"account_holder_name\": \"Holder 1\"\n    },\n    {\n      \"bank_ifsc_code\": \"IFSC2\",\n      \"bank_name\": \"Bank 2\",\n      \"branch_name\": \"Branch 2\",\n      \"account_no\": \"2345678901\",\n      \"account_holder_name\": \"Holder 2\"\n    },\n    {\n      \"bank_ifsc_code\": \"IFSC3\",\n      \"bank_name\": \"Bank 3\",\n      \"branch_name\": \"Branch 3\",\n      \"account_no\": \"3456789012\",\n      \"account_holder_name\": \"Holder 3\"\n    }\n  ]",
-									"type": "text"
-								},
-								{
-									"key": "payment_terms",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "opening_balance",
-									"value": "100",
-									"type": "text"
-								},
-								{
-									"key": "supplier_type",
-									"value": "Manufacturer",
-									"type": "text"
-								},
-								{
-									"key": "membership",
-									"value": "memb",
-									"type": "text"
-								},
-								{
-									"key": "opening_balance_type",
-									"value": "Dr",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{urls}}party/?id=10",
-							"host": [
-								"{{urls}}party"
-							],
-							"path": [
-								""
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "10"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Patch",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"url": {
-							"raw": "{{urls}}party/?id=8",
-							"host": [
-								"{{urls}}party"
-							],
-							"path": [
-								""
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "8"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{urls}}party/?id=10",
-							"host": [
-								"{{urls}}party"
-							],
-							"path": [
-								""
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "10"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"auth": {
-				"type": "apikey",
-				"apikey": [
-					{
-						"key": "value",
-						"value": "Token 256292e4661316e6a40af85df2473c745e424441",
-						"type": "string"
-					},
-					{
-						"key": "key",
-						"value": "Authorization",
-						"type": "string"
-					}
-				]
-			},
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							""
-						]
-					}
-				}
-			]
-		}
-	],
-	"auth": {
-		"type": "apikey",
-		"apikey": [
-			{
-				"key": "value",
-				"value": "Token aa4d0b1b9b2794090b18febbd71cf2c90e0d5a83",
-				"type": "string"
-			},
-			{
-				"key": "key",
-				"value": "Authorization",
-				"type": "string"
-			}
-		]
-	},
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"packages": {},
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"packages": {},
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"key": "urls",
-			"value": "https://ap.greatfuturetechno.com/"
-		}
-	]
+  "info": {
+    "_postman_id": "7e8528d7-fbc5-4bc5-bd5f-00f5ac8b33b9",
+    "name": "Dealer Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "23043473",
+    "username": "gftpl",
+    "passwd": "aZh#pl|20^45"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "login",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "username",
+                  "value": "gftpl",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "aZh#pl|20^45",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{urls}}login/",
+              "host": [
+                "{{urls}}login"
+              ],
+              "path": [
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "logout",
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "value",
+                  "value": "Token 0b17a96a0624824843d921ae5ba83f421042c71e",
+                  "type": "string"
+                },
+                {
+                  "key": "key",
+                  "value": "Authorization",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "token 537a0c68599890919f263f4fde6affd8604e884e"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "{{urls}}logout/",
+              "host": [
+                "{{urls}}logout"
+              ],
+              "path": [
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "DEALER",
+      "item": [
+        {
+          "name": "Get",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{urls}}party/",
+              "host": [
+                "{{urls}}party"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Optional (Integer)",
+                  "disabled": true
+                },
+                {
+                  "key": "page_size",
+                  "value": "4",
+                  "description": "Optional (Integer)",
+                  "disabled": true
+                },
+                {
+                  "key": "is_active",
+                  "value": "False",
+                  "description": "Optional (Boolean) True/False , is_active => is workingwhen Page and Page Size are filled ",
+                  "disabled": true
+                },
+                {
+                  "key": "search",
+                  "value": "Test",
+                  "description": "Optional (String) Search is active when Page and Page Size are filled ",
+                  "disabled": true
+                },
+                {
+                  "key": "id",
+                  "value": "9",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Post",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "login_access",
+                  "value": "True",
+                  "description": "Boolen True/False",
+                  "type": "text"
+                },
+                {
+                  "key": "name",
+                  "value": "rahul sir asawati ",
+                  "description": "String",
+                  "type": "text"
+                },
+                {
+                  "key": "company_name",
+                  "value": "amdocs",
+                  "description": "String",
+                  "type": "text"
+                },
+                {
+                  "key": "mobile_no",
+                  "value": "7838073412",
+                  "description": "String",
+                  "type": "text"
+                },
+                {
+                  "key": "telephone_no",
+                  "value": "7418529630",
+                  "description": "String",
+                  "type": "text"
+                },
+                {
+                  "key": "whatsapp_no",
+                  "value": "7418529630",
+                  "description": "String",
+                  "type": "text"
+                },
+                {
+                  "key": "remark",
+                  "value": "7410852063",
+                  "description": "String",
+                  "type": "text"
+                },
+                {
+                  "key": "date_of_birth",
+                  "value": "2002-10-10",
+                  "description": "Date",
+                  "type": "text"
+                },
+                {
+                  "key": "anniversary_date",
+                  "value": "2002-10-10",
+                  "description": "Date",
+                  "type": "text"
+                },
+                {
+                  "key": "gst_type",
+                  "value": "UnRegistered",
+                  "description": "UnRegistered/Registered Regular/Registered Composition/Input Service Distributor/Ecommerce Operator",
+                  "type": "text"
+                },
+                {
+                  "key": "gstin",
+                  "value": "MMMMMMMMM",
+                  "description": "String",
+                  "type": "text"
+                },
+                {
+                  "key": "pan_no",
+                  "value": "EDRFGVHB45",
+                  "description": "String",
+                  "type": "text"
+                },
+                {
+                  "key": "apply_tds",
+                  "value": "True",
+                  "description": "Boolean True/False",
+                  "type": "text"
+                },
+                {
+                  "key": "credit_limit",
+                  "value": "455",
+                  "description": "Integer",
+                  "type": "text"
+                },
+                {
+                  "key": "address",
+                  "value": "[\n     {\n  \"address_line_1\": \"123 Street\",\n  \"address_line_2\": \"Apt 4\",\n  \"country\": 1,\n  \"state\": 1,\n  \"city\": 1,\n  \"pincode\": \"90001\",\n  \"address_type\": \"Shipping\"\n},\n{\n  \"address_line_1\": \"456 Road\",\n  \"address_line_2\": \"Unit 8\",\n  \"country\": 2,\n  \"state\": 1,\n  \"city\": 1,\n  \"pincode\": \"10001\",\n  \"address_type\": \"Billing\"\n},\n{\n  \"address_line_1\": \"321 Lane\",\n  \"address_line_2\": \"Suite 10\",\n  \"country\": 1,\n  \"state\": 1,\n  \"city\": 1,  \n   \"pincode\": \"78701\",\n  \"address_type\": \"Billing\"\n}\n]",
+                  "description": "All Field String Except Pincode pincode is Integer",
+                  "type": "text"
+                },
+                {
+                  "key": "bank_id",
+                  "value": "[\n  {\n    'bank_ifsc_code': 'IFSC1',\n    'bank_name': 'Bank 1',\n    'branch_name': 'Branch 1',\n    'account_no': '1234567890',\n    'account_holder_name': 'Holder 1'\n},\n\n {\n    'bank_ifsc_code': 'IFSC2',\n    'bank_name': 'Bank 2',\n    'branch_name': 'Branch 2',\n    'account_no': '2345678901',\n    'account_holder_name': 'Holder 2'\n},\n{\n    'bank_ifsc_code': 'IFSC3',\n    'bank_name': 'Bank 3',\n    'branch_name': 'Branch 3',\n    'account_no': '3456789012',\n    'account_holder_name': 'Holder 3'\n}\n]",
+                  "description": "All Field String Except Pincode pincode is Integer",
+                  "type": "text"
+                },
+                {
+                  "key": "opening_balance",
+                  "value": "100",
+                  "description": "Integer",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "sharmaujjwal0921@gmail.com",
+                  "description": "Email",
+                  "type": "text"
+                },
+                {
+                  "key": "membership",
+                  "value": "membership",
+                  "description": "String",
+                  "type": "text"
+                },
+                {
+                  "key": "opening_balance_type",
+                  "value": "Cr",
+                  "description": "Cr/Dr",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{urls}}party/",
+              "host": [
+                "{{urls}}party"
+              ],
+              "path": [
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "login_access",
+                  "value": "True",
+                  "type": "text"
+                },
+                {
+                  "key": "name",
+                  "value": "UJJWAL",
+                  "type": "text"
+                },
+                {
+                  "key": "company_name",
+                  "value": "SERDTFGHH",
+                  "type": "text"
+                },
+                {
+                  "key": "mobile_no",
+                  "value": "783807345241",
+                  "type": "text"
+                },
+                {
+                  "key": "telephone_no",
+                  "value": "56251221",
+                  "type": "text"
+                },
+                {
+                  "key": "whatsapp_no",
+                  "value": "7418529630",
+                  "type": "text"
+                },
+                {
+                  "key": "remark",
+                  "value": "7410852063",
+                  "type": "text"
+                },
+                {
+                  "key": "date_of_birth",
+                  "value": "2002-10-11",
+                  "type": "text"
+                },
+                {
+                  "key": "anniversary_date",
+                  "value": "2002-10-11",
+                  "type": "text"
+                },
+                {
+                  "key": "gst_type",
+                  "value": "UnRegistered",
+                  "type": "text"
+                },
+                {
+                  "key": "gstin",
+                  "value": "ABCDA11",
+                  "type": "text"
+                },
+                {
+                  "key": "pan_no",
+                  "value": "EDRFGVHB45",
+                  "type": "text"
+                },
+                {
+                  "key": "apply_tds",
+                  "value": "True",
+                  "type": "text"
+                },
+                {
+                  "key": "credit_limit",
+                  "value": "455",
+                  "type": "text"
+                },
+                {
+                  "key": "address",
+                  "value": "[\n    {\n      \"id\": 26,\n      \"address_line_1\": \"Haryana 001 Street\",\n      \"address_line_2\": \"AAAAAAApt 4\",\n      \"country\": 2,\n      \"state\": 1,\n      \"city\": 1,\n      \"pincode\": \"90001\",\n      \"address_type\": \"Shipping\"\n    },\n    {\n      \"address_line_1\": \"456 Road\",\n      \"address_line_2\": \"Unit 8\",\n      \"country\": 1,\n      \"state\": 1,\n      \"city\": 1,\n      \"pincode\": \"10001\",\n      \"address_type\": \"Billing\"\n    },\n    {\n      \"address_line_1\": \"321 Lane\",\n      \"address_line_2\": \"Suite 10\",\n      \"country\": 1,\n      \"state\": 1,\n      \"city\": 1,\n      \"pincode\": \"78701\",\n      \"address_type\": \"Billing\"\n    }\n  ]",
+                  "type": "text"
+                },
+                {
+                  "key": "bank_id",
+                  "value": "[\n    {\n      \"id\": 28,\n      \"bank_ifsc_code\": \"updated\",\n      \"bank_name\": \"Bank 1 Union\",\n      \"branch_name\": \"Branch 1\",\n      \"account_no\": \"ABCD1234567890\",\n      \"account_holder_name\": \"Holder 1\"\n    },\n    {\n      \"bank_ifsc_code\": \"IFSC2\",\n      \"bank_name\": \"Bank 2\",\n      \"branch_name\": \"Branch 2\",\n      \"account_no\": \"2345678901\",\n      \"account_holder_name\": \"Holder 2\"\n    },\n    {\n      \"bank_ifsc_code\": \"IFSC3\",\n      \"bank_name\": \"Bank 3\",\n      \"branch_name\": \"Branch 3\",\n      \"account_no\": \"3456789012\",\n      \"account_holder_name\": \"Holder 3\"\n    }\n  ]",
+                  "type": "text"
+                },
+                {
+                  "key": "payment_terms",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "opening_balance",
+                  "value": "100",
+                  "type": "text"
+                },
+                {
+                  "key": "supplier_type",
+                  "value": "Manufacturer",
+                  "type": "text"
+                },
+                {
+                  "key": "membership",
+                  "value": "memb",
+                  "type": "text"
+                },
+                {
+                  "key": "opening_balance_type",
+                  "value": "Dr",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{urls}}party/?id=10",
+              "host": [
+                "{{urls}}party"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Patch",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{urls}}party/?id=8",
+              "host": [
+                "{{urls}}party"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "8"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{urls}}party/?id=10",
+              "host": [
+                "{{urls}}party"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "apikey",
+        "apikey": [
+          {
+            "key": "value",
+            "value": "Token 256292e4661316e6a40af85df2473c745e424441",
+            "type": "string"
+          },
+          {
+            "key": "key",
+            "value": "Authorization",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "value",
+        "value": "Token aa4d0b1b9b2794090b18febbd71cf2c90e0d5a83",
+        "type": "string"
+      },
+      {
+        "key": "key",
+        "value": "Authorization",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "urls",
+      "value": "https://ap.greatfuturetechno.com/"
+    }
+  ]
 }
