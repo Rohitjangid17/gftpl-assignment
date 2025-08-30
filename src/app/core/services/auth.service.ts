@@ -1,28 +1,45 @@
 import { Injectable } from '@angular/core';
-import { TOKEN, TOKEN_KEY } from '../../shared/constants';
+import { API_URL, TOKEN_KEY } from '../../shared/constants';
+import { HttpClient } from '@angular/common/http';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  constructor(
+    private _httpClient: HttpClient,
+    private _storageService: StorageService
+  ) { }
+
   // login user
   login(username: string, password: string) {
-    localStorage.setItem(TOKEN_KEY, TOKEN);
-    return true;
+    return this._httpClient.post(`${API_URL}login/`, { username, password });
   }
 
   // logout user
   logout() {
-    localStorage.removeItem(TOKEN_KEY);
+    return this._httpClient.post(`${API_URL}logout/`, {});
+  }
+
+  // token set
+  setToken(token: string) {
+    this._storageService.setItem(TOKEN_KEY, token);
   }
 
   // get token
-  getToken() {
-    return localStorage.getItem(TOKEN_KEY);
+  getToken(): string | null {
+    return this._storageService.getItem(TOKEN_KEY);
+  }
+
+  // clear token
+  clearToken(): void {
+    this._storageService.removeItem(TOKEN_KEY);
   }
 
   // check if user is logged in
-  isLoggedIn() {
+  isLoggedIn(): boolean {
     return !!this.getToken();
   }
 }

@@ -19,26 +19,34 @@ export class LoginComponent {
   loginForm!: FormGroup;
 
   constructor(
-    private fb: FormBuilder,
-    private auth: AuthService,
-    private router: Router
+    private _formBuilder: FormBuilder,
+    private _authService: AuthService,
+    private _router: Router,
   ) {
-    this.loginForm = this.fb.group({
-      username: ['', [Validators.required, Validators.email]],
+    this.loginForm = this._formBuilder.group({
+      username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
   // login user
   loginUser() {
-    console.log(this.loginForm.value);
-    if (this.loginForm.valid) {
-      const { username, password } = this.loginForm.value;
-      const success = this.auth.login(username!, password!);
-
-      if (success) {
-        this.router.navigate(['/parties']); // after login redirect
-      }
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return;
     }
+
+    const { username, password } = this.loginForm.value;
+
+    this._authService.login(username, password).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this._authService.setToken(response.token);
+        this._router.navigate(['/parties']);
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 }

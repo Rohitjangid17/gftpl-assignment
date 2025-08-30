@@ -31,4 +31,10 @@ export class PartiesComponent implements OnInit {
       console.log(data);
     });
   }
+
+  getPartyList() {
+    this._partyService.getParties().subscribe((response) => {
+      console.log("parties list ", response)
+    });
+  }
 }
