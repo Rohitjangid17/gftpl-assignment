@@ -1,13 +1,27 @@
-<div class="p-4 text-xl font-bold border-b border-gray-700 bg-gray-900 text-white">
+<mat-toolbar color="primary" class="!bg-indigo-600 !text-white text-center font-bold">
   Party Manager
+</mat-toolbar>
+
+<mat-nav-list class="!px-2">
+  <a mat-list-item routerLink="/parties" class="!text-white" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+    <mat-icon class="mr-2 !text-white">groups</mat-icon>
+    <span class="-mt-4 !text-white">Parties</span>
+  </a>
+
+  <a mat-list-item routerLink="/users" class="!text-white" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+    <mat-icon class="mr-2 !text-white">person</mat-icon>
+    <span class="-mt-4 !text-white">Users</span>
+  </a>
+
+  <a mat-list-item routerLink="/settings" class="!text-white" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+    <mat-icon class="mr-2 !text-white">settings</mat-icon>
+    <span class="-mt-4 !text-white">Settings</span>
+  </a>
+</mat-nav-list>
+
+<div class="absolute bottom-0 w-full p-2">
+  <button mat-raised-button color="warn" class="w-full !bg-transparent !shadow-none !text-white" (click)="logout()">
+    <mat-icon>logout</mat-icon>
+    Logout
+  </button>
 </div>
-
-<nav class="flex flex-col p-2 space-y-2 bg-gray-900 text-gray-300 h-full">
-  <a routerLink="/parties" routerLinkActive="bg-blue-600 text-white" class="p-2 rounded hover:bg-gray-700">🎉
-    Parties</a>
-
-  <a routerLink="/users" routerLinkActive="bg-blue-600 text-white" class="p-2 rounded hover:bg-gray-700">👤 Users</a>
-
-  <a routerLink="/settings" routerLinkActive="bg-blue-600 text-white" class="p-2 rounded hover:bg-gray-700">⚙️
-    Settings</a>
-</nav>
