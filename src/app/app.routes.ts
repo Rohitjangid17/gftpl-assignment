@@ -13,6 +13,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadChildren: () =>
       import('./modules/admin/parties/parties.routes').then((m) => m.PARTIES_ROUTES),
+    data: { prerender: false }
   },
   {
     path: '',
