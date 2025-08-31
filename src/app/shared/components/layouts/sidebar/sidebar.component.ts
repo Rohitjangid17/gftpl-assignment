@@ -6,11 +6,11 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../../../core/services/auth.service';
-
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [RouterModule, MatSidenavModule, MatToolbarModule, MatListModule, MatButtonModule, MatIconModule],
+  imports: [RouterModule, MatSidenavModule, NgxSpinnerModule, MatToolbarModule, MatListModule, MatButtonModule, MatIconModule],
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
@@ -19,10 +19,12 @@ export class SidebarComponent {
 
   constructor(
     private _authService: AuthService,
-    private _router: Router
+    private _router: Router,
+    private _spinnerService: NgxSpinnerService
   ) { }
 
   logout() {
+    this._spinnerService.show();
     this._authService.logout().subscribe({
       next: () => {
         this._authService.clearToken();
