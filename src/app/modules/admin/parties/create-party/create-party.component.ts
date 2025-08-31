@@ -14,9 +14,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { ApiResponse } from '../../../../core/interfaces/api-response';
 import { ToastrService } from 'ngx-toastr';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
+import { getAddresses, getBanks } from '../../../../utils/form-utils';
 
 @Component({
   selector: 'app-create-party',
@@ -95,6 +95,7 @@ export class CreatePartyComponent implements OnInit {
     this.isLoader = true;
     this.partyService.getPartyById(id).subscribe({
       next: (response) => {
+        console.log("get by id res ", response);
         this.partyForm.patchValue({
           name: response.name,
           company_name: response.company_name,
@@ -114,14 +115,14 @@ export class CreatePartyComponent implements OnInit {
           opening_balance_type: response.opening_balance_type,
           membership: response.membership,
           email: response.email,
-          // supplier_type: response.supplier_type,
-          // payment_terms: response.payment_terms
+          supplier_type: response.supplier_type ? response.supplier_type : '',
+          payment_terms: response.payment_terms ? response.payment_terms : ''
         });
 
         // Patch addresses safely
-        this.addresses.clear();
+        getAddresses(this.partyForm).clear();
         (response.address || []).forEach((address: any) =>
-          this.addresses.push(this.fb.group({
+          getAddresses(this.partyForm).push(this.fb.group({
             address_line_1: [address.address_line_1 || '', Validators.required],
             address_line_2: [address.address_line_2 || ''],
             city: [address.city || '', Validators.required],
@@ -133,9 +134,9 @@ export class CreatePartyComponent implements OnInit {
         );
 
         // Patch banks safely
-        this.banks.clear();
+        getBanks(this.partyForm).clear();
         (response.bank_id || []).forEach((bank: any) =>
-          this.banks.push(this.fb.group({
+          getBanks(this.partyForm).push(this.fb.group({
             bank_name: [bank.bank_name || '', Validators.required],
             account_no: [bank.account_no || '', Validators.required],
             branch_name: [bank.branch_name || ''],
@@ -169,8 +170,8 @@ export class CreatePartyComponent implements OnInit {
 
   // Remove Address
   removeAddress(index: number) {
-    if (this.addresses.controls.length > 1) {
-      (this.partyForm.get('addresses') as FormArray).removeAt(index);
+    if (getAddresses(this.partyForm).controls.length > 1) {
+      getAddresses(this.partyForm).removeAt(index);
     }
   }
 
@@ -192,15 +193,15 @@ export class CreatePartyComponent implements OnInit {
 
   // Remove Bank
   removeBank(index: number) {
-    if (this.banks.controls.length > 1) {
-      (this.partyForm.get('banks') as FormArray).removeAt(index);
+    if (getBanks(this.partyForm).controls.length > 1) {
+      getBanks(this.partyForm).removeAt(index);
     }
   }
 
   // Submit Form
-  createNewParty() {
+  saveParty() {
     if (this.partyForm.invalid) {
-      this.snackBar.open('Please fill all required fields!', 'Close', { duration: 3000 });
+      this._toastrService.error('Please fill all required fields!');
       return;
     }
 
@@ -251,13 +252,13 @@ export class CreatePartyComponent implements OnInit {
     }
   }
 
-  // Helper getters for template
-  get addresses() {
-    return this.partyForm.get('addresses') as FormArray;
+  // Getter for addresses FormArray
+  get addresses(): FormArray {
+    return getAddresses(this.partyForm);
   }
 
-  // Getter for Banks FormArray
-  get banks() {
-    return this.partyForm.get('banks') as FormArray;
+  // Getter for banks FormArray
+  get banks(): FormArray {
+    return getBanks(this.partyForm);
   }
 }

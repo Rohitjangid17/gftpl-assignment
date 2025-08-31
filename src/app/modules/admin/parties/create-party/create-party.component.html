@@ -4,7 +4,7 @@
     { label: 'Create Party' }
   ]" />
 
-<form [formGroup]="partyForm" (ngSubmit)="createNewParty()" class="party-form">
+<form [formGroup]="partyForm" (ngSubmit)="saveParty()" class="party-form">
   <!-- Basic Info -->
   <mat-card class="mb-6 p-4">
     <mat-card-title>Basic Information</mat-card-title>
@@ -291,8 +291,6 @@
     <button mat-raised-button color="warn" type="button" [routerLink]="['/parties']">Cancel</button>
     <button mat-raised-button color="accent" type="submit">Save Party</button>
   </div>
-
-
 </form>
 
 <app-loader [loading]="isLoader"></app-loader>

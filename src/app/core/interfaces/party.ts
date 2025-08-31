@@ -24,6 +24,8 @@ export interface Party {
   is_active: boolean;
   is_creditors: boolean;
   is_debtors: boolean;
+  supplier_type: string;
+  payment_terms: string;
 }
 
 export interface Address {
