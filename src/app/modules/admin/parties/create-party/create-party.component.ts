@@ -16,6 +16,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 import { getAddresses, getBanks } from '../../../../utils/form-utils';
 import { ToastrService } from '../../../../core/services/toastr.service';
+import { dobBeforeAnniversaryValidator } from '../../../../utils/date-range.validator';
 
 @Component({
   selector: 'app-create-party',
@@ -55,19 +56,19 @@ export class CreatePartyComponent implements OnInit {
     this.partyForm = this._formBuilder.group({
       name: ['', Validators.required],
       company_name: ['', Validators.required],
-      mobile_no: ['', Validators.required],
-      telephone_no: ['', Validators.required],
-      whatsapp_no: ['', Validators.required],
+      mobile_no: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10), Validators.maxLength(10)]],
+      telephone_no: ['', [Validators.pattern(/^[0-9]{6,12}$/)]],
+      whatsapp_no: ['', [Validators.pattern(/^[0-9]{10}$/)]],
       remark: ['', Validators.required],
       date_of_birth: ['', Validators.required],
       anniversary_date: ['', Validators.required],
       gst_type: ['', Validators.required],
-      gstin: ['', Validators.required],
-      pan_no: ['', Validators.required],
+      gstin: ['', [Validators.pattern(/^([0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9-A-Z]{1})$/)]],
+      pan_no: ['', [Validators.pattern(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/)]],
       apply_tds: [false],
       login_access: [false],
-      credit_limit: ['', Validators.required],
-      opening_balance: ['', Validators.required],
+      credit_limit: ['', [Validators.min(0)]],
+      opening_balance: ['', [Validators.min(0)]],
       opening_balance_type: ['', Validators.required],
       membership: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -75,7 +76,7 @@ export class CreatePartyComponent implements OnInit {
       payment_terms: [''],
       addresses: this._formBuilder.array([this.createAddress()]),
       banks: this._formBuilder.array([this.createBank()])
-    });
+    }, { validators: dobBeforeAnniversaryValidator });
   }
 
   ngOnInit() {
@@ -122,10 +123,10 @@ export class CreatePartyComponent implements OnInit {
           getAddresses(this.partyForm).push(this._formBuilder.group({
             address_line_1: [address.address_line_1 || '', Validators.required],
             address_line_2: [address.address_line_2 || ''],
-            city: [address.city || '', Validators.required],
-            state: [address.state || ''],
-            country: [address.country || ''],
-            pincode: [address.pincode || '', Validators.required],
+            country: ['', [Validators.required, Validators.pattern(/^[0-9]{1,3}$/)]],
+            state: ['', [Validators.required, Validators.pattern(/^[0-9]{1,3}$/)]],
+            city: ['', [Validators.required, Validators.pattern(/^[0-9]{1,3}$/)]],
+            pincode: ['', [Validators.required, Validators.pattern(/^[0-9]{6}$/)]],
             address_type: [address.address_type]
           }))
         );
@@ -135,10 +136,10 @@ export class CreatePartyComponent implements OnInit {
         (response.bank_id || []).forEach((bank: any) =>
           getBanks(this.partyForm).push(this._formBuilder.group({
             bank_name: [bank.bank_name || '', Validators.required],
-            account_no: [bank.account_no || '', Validators.required],
+            account_no: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(18)]],
             branch_name: [bank.branch_name || ''],
             account_holder_name: [bank.account_holder_name || ''],
-            bank_ifsc_code: [bank.bank_ifsc_code || '']
+            bank_ifsc_code: ['', [Validators.required, Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]],
           }))
         );
 
@@ -155,8 +156,8 @@ export class CreatePartyComponent implements OnInit {
       city: ['', Validators.required],
       state: [''],
       country: [''],
-      pincode: ['', Validators.required],
-      address_type: ['Billing']
+      pincode: ['', [Validators.required, Validators.required, Validators.pattern(/^[0-9]{6}$/)]],
+      address_type: ['']
     });
   }
 
@@ -176,10 +177,10 @@ export class CreatePartyComponent implements OnInit {
   createBank(): FormGroup {
     return this._formBuilder.group({
       bank_name: ['', Validators.required],
-      account_no: ['', Validators.required],
+      account_no: ['', [Validators.required, Validators.pattern(/^[0-9]{9,18}$/)]],
       branch_name: [''],
       account_holder_name: [''],
-      bank_ifsc_code: ['']
+      bank_ifsc_code: ['', [Validators.required, Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]]
     });
   }
 
@@ -197,11 +198,6 @@ export class CreatePartyComponent implements OnInit {
 
   // Submit Form
   saveParty() {
-    if (this.partyForm.invalid) {
-      this._toastrService.error('Please fill all required fields!');
-      return;
-    }
-
     // Format dates as YYYY-MM-DD
     const dob = this.partyForm.value.date_of_birth
       ? new Date(this.partyForm.value.date_of_birth).toISOString().split('T')[0]
