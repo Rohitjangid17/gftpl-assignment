@@ -6,13 +6,13 @@ import { CommonModule } from '@angular/common';
 import { PartyService } from '../../../core/services/party.service';
 import { BreadcrumbComponent } from '../../../shared/components/breadcrumb/breadcrumb.component';
 import { Party } from '../../../core/interfaces/party';
-import { LoaderComponent } from '../../../shared/components/loader/loader.component';
 import { RouterLink, RouterModule } from '@angular/router';
 import { ToastrService } from '../../../core/services/toastr.service';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-parties',
-  imports: [CommonModule, MatTableModule, MatIconModule, MatButtonModule, MatButtonModule, BreadcrumbComponent, RouterModule, LoaderComponent, RouterLink],
+  imports: [NgxSpinnerModule, CommonModule, MatTableModule, MatIconModule, MatButtonModule, MatButtonModule, BreadcrumbComponent, RouterModule, RouterLink],
   templateUrl: './parties.component.html',
   styleUrl: './parties.component.scss'
 })
@@ -27,11 +27,11 @@ export class PartiesComponent implements OnInit {
     'actions'];
 
   parties: Party[] = [];
-  isLoader: boolean = false;
 
   constructor(
     private _partyService: PartyService,
-    private _toastrService: ToastrService
+    private _toastrService: ToastrService,
+    private _spinnerService: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
@@ -40,33 +40,33 @@ export class PartiesComponent implements OnInit {
 
   // Fetch the list of parties
   getPartyList() {
-    this.isLoader = true;
+    this._spinnerService.show();
 
     this._partyService.getParties().subscribe({
       next: (response: Party[]) => {
         this.parties = response;
         console.log("parties list ", this.parties);
-        this.isLoader = false;
+        this._spinnerService.hide();
       },
       error: (error) => {
         console.error('Error fetching parties:', error);
-        this.isLoader = false;
+        this._spinnerService.hide();
       },
     });
   }
 
-  updateParty(party: Party) {
-    // Logic to update the party
-  }
-
+  // Delete party by id
   deleteParty(id: number) {
+    this._spinnerService.show();
     this._partyService.deletePartyById(id).subscribe({
       next: (response) => {
+        this._spinnerService.hide();
         this._toastrService.success(response?.msg ?? "Party deleted successfully!");
         this.getPartyList();
       },
       error: (error) => {
         console.error("Error deleting party:", error);
+        this._spinnerService.hide();
       }
     });
   }

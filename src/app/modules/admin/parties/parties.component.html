@@ -12,7 +12,7 @@
 </div>
 
 <!-- Table -->
-<ng-container *ngIf="!isLoader">
+<ng-container>
   <div class="overflow-x-auto">
     <table mat-table [dataSource]="parties" class="mat-elevation-z8 w-full !bg-white !shadow-lg border border-gray-200">
       <!-- Name -->
@@ -87,7 +87,17 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+
+    <ng-container *ngIf="!parties || parties.length === 0">
+      <div class="w-full text-center py-10 text-gray-500">
+        <p class="text-lg">No parties found 😔</p>
+        <button mat-raised-button color="primary" routerLink="/parties/create-party" class="mt-4">
+          Create your first party
+        </button>
+      </div>
+    </ng-container>
   </div>
 </ng-container>
-
-<app-loader [loading]="isLoader" />
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.6)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

@@ -376,10 +376,9 @@
           }">
       Save Party
     </button>
-    <!-- <button mat-raised-button
-      class="!py-2 !rounded-md !text-white font-medium transition duration-200 !bg-indigo-600 hover:!bg-indigo-700 cursor-pointer shadow-md"
-      type="submit">Save Party</button> -->
   </div>
 </form>
 
-<app-loader [loading]="isLoader"></app-loader>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.6)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

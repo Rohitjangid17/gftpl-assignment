@@ -13,6 +13,11 @@ export const authGuard: CanActivateFn = (route, state): boolean | UrlTree => {
     return router.parseUrl('/parties');
   }
 
+  // If hitting root `/` → decide based on login
+  if (state.url === '/' || state.url === '') {
+    return isLoggedIn ? router.parseUrl('/parties') : router.parseUrl('/login');
+  }
+
   // If trying to access protected routes while not logged in → redirect to /login
   if (!state.url.startsWith('/login') && !isLoggedIn) {
     return router.parseUrl('/login');

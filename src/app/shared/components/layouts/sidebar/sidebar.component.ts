@@ -30,6 +30,8 @@ export class SidebarComponent {
       },
       error: (err) => {
         console.error('Logout error', err);
+        this._authService.clearToken();
+        this._router.navigate(['/login']);
       }
     })
   }
