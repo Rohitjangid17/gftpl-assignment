@@ -16,4 +16,9 @@ export class PartyService {
   getParties(): Observable<Party[]> {
     return this._httpClient.get<Party[]>(`${API_URL}party/`);
   }
+
+  // create party
+  createParty(party: Party): Observable<Party> {
+    return this._httpClient.post<Party>(`${API_URL}party/`, party);
+  }
 }

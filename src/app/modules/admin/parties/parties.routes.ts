@@ -15,7 +15,11 @@ export const PARTIES_ROUTES: Routes = [
       {
         path: 'parties/create-party',
         component: CreatePartyComponent
-      }
+      },
+      {
+        path: 'parties/update-party/:id',
+        component: CreatePartyComponent
+      },
     ],
   },
 ];

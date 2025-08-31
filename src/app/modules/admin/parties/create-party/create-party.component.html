@@ -1,0 +1,147 @@
+<app-breadcrumb title="Create Party" [breadcrumbs]="[
+    { label: 'Dashboard', url: '/dashboard' },
+    { label: 'Parties', url: '/parties' },
+    { label: 'Create Party' }
+  ]" />
+
+<form [formGroup]="partyForm" (ngSubmit)="createNewParty()" class="space-y-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <!-- Name -->
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" placeholder="Enter name" />
+      <mat-error *ngIf="partyForm.get('name')?.hasError('required')">
+        Name is required
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Company Name -->
+    <mat-form-field appearance="outline">
+      <mat-label>Company Name</mat-label>
+      <input matInput formControlName="company_name" placeholder="Enter company name" />
+      <mat-error *ngIf="partyForm.get('company_name')?.hasError('required')">
+        Company name is required
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Mobile No -->
+    <mat-form-field appearance="outline">
+      <mat-label>Mobile No</mat-label>
+      <input matInput formControlName="mobile_no" placeholder="Enter mobile" />
+    </mat-form-field>
+
+    <!-- Telephone No -->
+    <mat-form-field appearance="outline">
+      <mat-label>Telephone No</mat-label>
+      <input matInput formControlName="telephone_no" placeholder="Enter telephone no" />
+    </mat-form-field>
+
+    <!-- WhatsApp No -->
+    <mat-form-field appearance="outline">
+      <mat-label>WhatsApp No</mat-label>
+      <input matInput formControlName="whatsapp_no" placeholder="Enter WhatsApp no" />
+    </mat-form-field>
+
+    <!-- Email -->
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" />
+    </mat-form-field>
+
+    <!-- Remark -->
+    <mat-form-field appearance="outline" class="col-span-2">
+      <mat-label>Remark</mat-label>
+      <textarea matInput rows="2" formControlName="remark" placeholder="Enter remark"></textarea>
+    </mat-form-field>
+
+    <!-- DOB -->
+    <mat-form-field appearance="outline">
+      <mat-label>Date of Birth</mat-label>
+      <input matInput type="date" formControlName="date_of_birth" />
+    </mat-form-field>
+
+    <!-- Anniversary Date -->
+    <mat-form-field appearance="outline">
+      <mat-label>Anniversary Date</mat-label>
+      <input matInput type="date" formControlName="anniversary_date" />
+    </mat-form-field>
+
+    <!-- GST Type -->
+    <mat-form-field appearance="outline">
+      <mat-label>GST Type</mat-label>
+      <mat-select formControlName="gst_type">
+        <mat-option value="UnRegistered">UnRegistered</mat-option>
+        <mat-option value="Registered Regular">Registered Regular</mat-option>
+        <mat-option value="Registered Composition">Registered Composition</mat-option>
+        <mat-option value="Input Service Distributor">Input Service Distributor</mat-option>
+        <mat-option value="Ecommerce Operator">Ecommerce Operator</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- GSTIN -->
+    <mat-form-field appearance="outline">
+      <mat-label>GSTIN</mat-label>
+      <input matInput formControlName="gstin" placeholder="Enter GSTIN" />
+    </mat-form-field>
+
+    <!-- PAN No -->
+    <mat-form-field appearance="outline">
+      <mat-label>PAN No</mat-label>
+      <input matInput formControlName="pan_no" placeholder="Enter PAN no" />
+    </mat-form-field>
+
+    <!-- Apply TDS -->
+    <mat-checkbox formControlName="apply_tds"> Apply TDS </mat-checkbox>
+
+    <!-- Credit Limit -->
+    <mat-form-field appearance="outline">
+      <mat-label>Credit Limit</mat-label>
+      <input matInput type="number" formControlName="credit_limit" placeholder="Enter credit limit" />
+    </mat-form-field>
+
+    <!-- Opening Balance -->
+    <mat-form-field appearance="outline">
+      <mat-label>Opening Balance</mat-label>
+      <input matInput type="number" formControlName="opening_balance" placeholder="Enter opening balance" />
+    </mat-form-field>
+
+    <!-- Opening Balance Type -->
+    <mat-form-field appearance="outline">
+      <mat-label>Opening Balance Type</mat-label>
+      <mat-select formControlName="opening_balance_type">
+        <mat-option value="Cr">Cr</mat-option>
+        <mat-option value="Dr">Dr</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Membership -->
+    <mat-form-field appearance="outline">
+      <mat-label>Membership</mat-label>
+      <input matInput formControlName="membership" placeholder="Enter membership" />
+    </mat-form-field>
+
+    <!-- Address (JSON as string for now) -->
+    <mat-form-field appearance="outline" class="col-span-2">
+      <mat-label>Address</mat-label>
+      <textarea matInput rows="3" formControlName="address"
+        placeholder='[{ "address_line_1": "...", "city": 1, "pincode": "12345" }]'></textarea>
+    </mat-form-field>
+
+    <!-- Bank (JSON as string for now) -->
+    <mat-form-field appearance="outline" class="col-span-2">
+      <mat-label>Bank Details</mat-label>
+      <textarea matInput rows="3" formControlName="bank_id"
+        placeholder='[{ "bank_name": "HDFC", "account_no": "12345" }]'></textarea>
+    </mat-form-field>
+  </div>
+
+  <!-- Actions -->
+  <div class="flex justify-end gap-3">
+    <button mat-stroked-button color="warn" type="button" routerLink="/parties">
+      Cancel
+    </button>
+    <button mat-flat-button color="primary" type="submit">
+      Save Party
+    </button>
+  </div>
+</form>
