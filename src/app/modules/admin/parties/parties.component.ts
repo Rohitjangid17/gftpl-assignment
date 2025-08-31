@@ -8,6 +8,7 @@ import { BreadcrumbComponent } from '../../../shared/components/breadcrumb/bread
 import { Party } from '../../../core/interfaces/party';
 import { LoaderComponent } from '../../../shared/components/loader/loader.component';
 import { RouterLink, RouterModule } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-parties',
@@ -30,7 +31,8 @@ export class PartiesComponent implements OnInit {
   isLoader: boolean = false;
 
   constructor(
-    private _partyService: PartyService
+    private _partyService: PartyService,
+    private _toastrService: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -54,17 +56,19 @@ export class PartiesComponent implements OnInit {
     });
   }
 
-  // Create a new party
-  createParty() {
-    // Logic to create a new party
-  }
-
   updateParty(party: Party) {
     // Logic to update the party
   }
 
-  deleteParty(party: Party) {
-    // Logic to delete the party
+  deleteParty(id: number) {
+    this._partyService.deletePartyById(id).subscribe({
+      next: (response) => {
+        this._toastrService.success(response?.msg ?? "Party deleted successfully!");
+        this.getPartyList();
+      },
+      error: (error) => {
+        console.error("Error deleting party:", error);
+      }
+    });
   }
-
 }
