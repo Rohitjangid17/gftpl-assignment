@@ -21,7 +21,6 @@ export class PartiesComponent implements OnInit {
     'company_name',
     'mobile_no',
     'email',
-    'gstin',
     'date_of_birth',
     'anniversary_date',
     'is_active',

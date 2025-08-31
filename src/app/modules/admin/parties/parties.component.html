@@ -14,54 +14,57 @@
 <!-- Table -->
 <ng-container *ngIf="!isLoader">
   <div class="overflow-x-auto">
-    <table mat-table [dataSource]="parties" class="mat-elevation-z8 w-full">
+    <table mat-table [dataSource]="parties" class="mat-elevation-z8 w-full !bg-white !shadow-lg border border-gray-200">
       <!-- Name -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let party"> {{ party.name }} </td>
+        <th mat-header-cell *matHeaderCellDef class="whitespace-nowrap !border-b !border-gray-300"> Name </th>
+        <td mat-cell *matCellDef="let party" class="!border-b !border-gray-300"> {{ party.name }} </td>
       </ng-container>
 
       <!-- Company -->
       <ng-container matColumnDef="company_name">
-        <th mat-header-cell *matHeaderCellDef> Company Name</th>
-        <td mat-cell *matCellDef="let party"> {{ party.company_name }} </td>
+        <th mat-header-cell *matHeaderCellDef class="whitespace-nowrap !border-b !border-gray-300"> Company Name</th>
+        <td mat-cell *matCellDef="let party" class="!border-b !border-gray-300"> {{ party.company_name }} </td>
       </ng-container>
 
       <!-- Mobile -->
       <ng-container matColumnDef="mobile_no">
-        <th mat-header-cell *matHeaderCellDef> Mobile </th>
-        <td mat-cell *matCellDef="let party"> {{ party.mobile_no }} </td>
+        <th mat-header-cell *matHeaderCellDef class="whitespace-nowrap !border-b !border-gray-300"> Mobile </th>
+        <td mat-cell *matCellDef="let party" class="!border-b !border-gray-300"> {{ party.mobile_no }} </td>
       </ng-container>
 
       <!-- Email -->
       <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef> Email </th>
-        <td mat-cell *matCellDef="let party"> {{ party.email }} </td>
+        <th mat-header-cell *matHeaderCellDef class="whitespace-nowrap !border-b !border-gray-300"> Email </th>
+        <td mat-cell *matCellDef="let party" class="!border-b !border-gray-300"> {{ party.email }} </td>
       </ng-container>
 
       <!-- GSTIN -->
-      <ng-container matColumnDef="gstin">
+      <!-- <ng-container matColumnDef="gstin">
         <th mat-header-cell *matHeaderCellDef> GSTIN </th>
         <td mat-cell *matCellDef="let party"> {{ party.gstin }} </td>
-      </ng-container>
+      </ng-container> -->
 
       <!-- DOB -->
       <ng-container matColumnDef="date_of_birth">
-        <th mat-header-cell *matHeaderCellDef> Date of Birth </th>
-        <td mat-cell *matCellDef="let party"> {{ party.date_of_birth | date }} </td>
+        <th mat-header-cell *matHeaderCellDef class="whitespace-nowrap !border-b !border-gray-300"> Date of Birth </th>
+        <td mat-cell *matCellDef="let party" class="whitespace-nowrap !border-b !border-gray-300"> {{
+          party.date_of_birth | date }} </td>
       </ng-container>
 
       <!-- Anniversary -->
       <ng-container matColumnDef="anniversary_date">
-        <th mat-header-cell *matHeaderCellDef> Anniversary </th>
-        <td mat-cell *matCellDef="let party"> {{ party.anniversary_date | date }} </td>
+        <th mat-header-cell *matHeaderCellDef class="whitespace-nowrap !border-b !border-gray-300"> Anniversary </th>
+        <td mat-cell *matCellDef="let party" class="whitespace-nowrap !border-b !border-gray-300"> {{
+          party.anniversary_date | date }} </td>
       </ng-container>
 
       <!-- Active Status Column -->
       <ng-container matColumnDef="is_active">
-        <th mat-header-cell *matHeaderCellDef class="px-4 py-2 text-center">Active</th>
-        <td mat-cell *matCellDef="let party" class="px-4 py-2 text-center">
-          <span [ngClass]="party.is_active ? 'text-green-600' : 'text-red-600'">
+        <th mat-header-cell *matHeaderCellDef class="px-4 py-2 text-center !border-b !border-gray-300">Active</th>
+        <td mat-cell *matCellDef="let party" class="px-4 py-2 text-center !border-b !border-gray-300">
+          <span
+            [ngClass]="party.is_active ? 'text-green-600 bg-green-300 font-medium px-3 !text-xs py-1 rounded-full' : ' text-red-600 bg-red-300 font-medium px-3 !text-xs py-1 rounded-full'">
             {{ party.is_active ? 'Active' : 'Inactive' }}
           </span>
         </td>
@@ -69,12 +72,12 @@
 
       <!-- Actions -->
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef> Actions </th>
-        <td mat-cell *matCellDef="let party">
-          <button mat-icon-button color="primary" [routerLink]="['/parties/update-party/', party.id]">
+        <th mat-header-cell *matHeaderCellDef class="whitespace-nowrap !border-b !border-gray-300"> Actions </th>
+        <td mat-cell *matCellDef="let party" class="whitespace-nowrap !border-b !border-gray-300">
+          <button mat-icon-button color="primary" class="!text-sm" [routerLink]="['/parties/update-party/', party.id]">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="deleteParty(party?.id)">
+          <button mat-icon-button color="warn" class="!text-sm" (click)="deleteParty(party?.id)">
             <mat-icon>delete</mat-icon>
           </button>
         </td>
