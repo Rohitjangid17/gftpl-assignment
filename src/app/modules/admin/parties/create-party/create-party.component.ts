@@ -9,14 +9,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { PartyService } from '../../../../core/services/party.service';
 import { BreadcrumbComponent } from '../../../../shared/components/breadcrumb/breadcrumb.component';
 import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { ToastrService } from 'ngx-toastr';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 import { getAddresses, getBanks } from '../../../../utils/form-utils';
+import { ToastrService } from '../../../../core/services/toastr.service';
 
 @Component({
   selector: 'app-create-party',
@@ -30,7 +29,6 @@ import { getAddresses, getBanks } from '../../../../utils/form-utils';
     MatSelectModule,
     MatCheckboxModule,
     BreadcrumbComponent,
-    MatSnackBarModule,
     MatCardModule,
     MatDatepickerModule,
     MatNativeDateModule,
@@ -51,7 +49,6 @@ export class CreatePartyComponent implements OnInit {
     private fb: FormBuilder,
     private partyService: PartyService,
     private router: Router,
-    private snackBar: MatSnackBar,
     private _toastrService: ToastrService,
     private _activateRoute: ActivatedRoute
   ) {

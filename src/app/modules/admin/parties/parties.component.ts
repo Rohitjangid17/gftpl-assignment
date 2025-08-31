@@ -8,7 +8,7 @@ import { BreadcrumbComponent } from '../../../shared/components/breadcrumb/bread
 import { Party } from '../../../core/interfaces/party';
 import { LoaderComponent } from '../../../shared/components/loader/loader.component';
 import { RouterLink, RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from '../../../core/services/toastr.service';
 
 @Component({
   selector: 'app-parties',

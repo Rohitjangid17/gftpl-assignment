@@ -9,8 +9,8 @@ import { AuthService } from '../../../core/services/auth.service';
 import { NgClass, NgIf } from '@angular/common';
 import { NgxLoadingModule } from 'ngx-loading';
 import { LoaderComponent } from '../../../shared/components/loader/loader.component';
-import { ToastrService } from 'ngx-toastr';
 import { LoginResponse, UserLogin } from '../../../core/interfaces/auth';
+import { ToastrService } from '../../../core/services/toastr.service';
 
 @Component({
   selector: 'app-login',
