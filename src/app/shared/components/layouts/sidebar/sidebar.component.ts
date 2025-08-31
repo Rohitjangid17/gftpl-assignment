@@ -28,10 +28,12 @@ export class SidebarComponent {
     this._authService.logout().subscribe({
       next: () => {
         this._authService.clearToken();
+        this._spinnerService.hide();
         this._router.navigate(['/login']);
       },
       error: (err) => {
         console.error('Logout error', err);
+        this._spinnerService.hide();
         this._authService.clearToken();
         this._router.navigate(['/login']);
       }
