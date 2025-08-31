@@ -46,13 +46,13 @@ export class CreatePartyComponent implements OnInit {
   isLoader: boolean = false;
 
   constructor(
-    private fb: FormBuilder,
-    private partyService: PartyService,
-    private router: Router,
+    private _formBuilder: FormBuilder,
+    private _partyService: PartyService,
+    private _router: Router,
     private _toastrService: ToastrService,
     private _activateRoute: ActivatedRoute
   ) {
-    this.partyForm = this.fb.group({
+    this.partyForm = this._formBuilder.group({
       name: ['', Validators.required],
       company_name: ['', Validators.required],
       mobile_no: ['', Validators.required],
@@ -73,8 +73,8 @@ export class CreatePartyComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       supplier_type: [''],
       payment_terms: [''],
-      addresses: this.fb.array([this.createAddress()]),
-      banks: this.fb.array([this.createBank()])
+      addresses: this._formBuilder.array([this.createAddress()]),
+      banks: this._formBuilder.array([this.createBank()])
     });
   }
 
@@ -90,7 +90,7 @@ export class CreatePartyComponent implements OnInit {
   // get party by id
   getPartyById(id: number) {
     this.isLoader = true;
-    this.partyService.getPartyById(id).subscribe({
+    this._partyService.getPartyById(id).subscribe({
       next: (response) => {
         console.log("get by id res ", response);
         this.partyForm.patchValue({
@@ -119,7 +119,7 @@ export class CreatePartyComponent implements OnInit {
         // Patch addresses safely
         getAddresses(this.partyForm).clear();
         (response.address || []).forEach((address: any) =>
-          getAddresses(this.partyForm).push(this.fb.group({
+          getAddresses(this.partyForm).push(this._formBuilder.group({
             address_line_1: [address.address_line_1 || '', Validators.required],
             address_line_2: [address.address_line_2 || ''],
             city: [address.city || '', Validators.required],
@@ -133,7 +133,7 @@ export class CreatePartyComponent implements OnInit {
         // Patch banks safely
         getBanks(this.partyForm).clear();
         (response.bank_id || []).forEach((bank: any) =>
-          getBanks(this.partyForm).push(this.fb.group({
+          getBanks(this.partyForm).push(this._formBuilder.group({
             bank_name: [bank.bank_name || '', Validators.required],
             account_no: [bank.account_no || '', Validators.required],
             branch_name: [bank.branch_name || ''],
@@ -149,7 +149,7 @@ export class CreatePartyComponent implements OnInit {
 
   // Create Address FormGroup
   createAddress(): FormGroup {
-    return this.fb.group({
+    return this._formBuilder.group({
       address_line_1: ['', Validators.required],
       address_line_2: [''],
       city: ['', Validators.required],
@@ -174,7 +174,7 @@ export class CreatePartyComponent implements OnInit {
 
   // Create Bank FormGroup
   createBank(): FormGroup {
-    return this.fb.group({
+    return this._formBuilder.group({
       bank_name: ['', Validators.required],
       account_no: ['', Validators.required],
       branch_name: [''],
@@ -220,11 +220,11 @@ export class CreatePartyComponent implements OnInit {
 
     if (this.partyId) {
       // Update existing party
-      this.partyService.updatePartyById(this.partyId, payload).subscribe({
+      this._partyService.updatePartyById(this.partyId, payload).subscribe({
         next: (response: any) => {
           this.isLoader = false;
           this._toastrService.success(response?.msg ?? "Party updated successfully!");
-          this.router.navigate(['/parties']);
+          this._router.navigate(['/parties']);
         },
         error: (err) => {
           this.isLoader = false;
@@ -234,11 +234,11 @@ export class CreatePartyComponent implements OnInit {
       });
     } else {
       // Create new party
-      this.partyService.createParty(payload).subscribe({
+      this._partyService.createParty(payload).subscribe({
         next: (response: any) => {
           this.isLoader = false;
           this._toastrService.success(response?.msg ?? "Party created successfully!");
-          this.router.navigate(['/parties']);
+          this._router.navigate(['/parties']);
         },
         error: (err) => {
           this.isLoader = false;
