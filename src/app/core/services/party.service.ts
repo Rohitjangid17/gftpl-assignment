@@ -18,9 +18,19 @@ export class PartyService {
     return this._httpClient.get<Party[]>(`${API_URL}party/`);
   }
 
+  // get party by id
+  getPartyById(id: number): Observable<Party> {
+    return this._httpClient.get<Party>(`${API_URL}party/?id=${id}`);
+  }
+
   // create party
   createParty(party: Party): Observable<Party> {
     return this._httpClient.post<Party>(`${API_URL}party/`, party);
+  }
+
+  // update party by id
+  updatePartyById(id: number, party: Party): Observable<Party> {
+    return this._httpClient.put<Party>(`${API_URL}party/?id=${id}`, party);
   }
 
   // delete party

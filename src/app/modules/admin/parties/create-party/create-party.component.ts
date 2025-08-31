@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
@@ -8,13 +8,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { PartyService } from '../../../../core/services/party.service';
 import { BreadcrumbComponent } from '../../../../shared/components/breadcrumb/breadcrumb.component';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ApiResponse } from '../../../../core/interfaces/api-response';
+import { ToastrService } from 'ngx-toastr';
+import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 
 @Component({
   selector: 'app-create-party',
@@ -34,19 +36,24 @@ import { ApiResponse } from '../../../../core/interfaces/api-response';
     MatNativeDateModule,
     MatSlideToggleModule,
     RouterLink,
-    RouterModule
+    RouterModule,
+    LoaderComponent
   ],
   templateUrl: './create-party.component.html',
   styleUrls: ['./create-party.component.scss']
 })
-export class CreatePartyComponent {
+export class CreatePartyComponent implements OnInit {
   partyForm: FormGroup;
+  partyId: number | null = null;
+  isLoader: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private partyService: PartyService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private _toastrService: ToastrService,
+    private _activateRoute: ActivatedRoute
   ) {
     this.partyForm = this.fb.group({
       name: ['', Validators.required],
@@ -71,6 +78,74 @@ export class CreatePartyComponent {
       payment_terms: [''],
       addresses: this.fb.array([this.createAddress()]),
       banks: this.fb.array([this.createBank()])
+    });
+  }
+
+  ngOnInit() {
+    this._activateRoute.params.subscribe(params => {
+      this.partyId = params['id'] ? +params['id'] : null;
+      if (this.partyId) {
+        this.getPartyById(this.partyId);
+      }
+    });
+  }
+
+  // get party by id
+  getPartyById(id: number) {
+    this.isLoader = true;
+    this.partyService.getPartyById(id).subscribe({
+      next: (response) => {
+        this.partyForm.patchValue({
+          name: response.name,
+          company_name: response.company_name,
+          mobile_no: response.mobile_no,
+          telephone_no: response.telephone_no,
+          whatsapp_no: response.whatsapp_no,
+          remark: response.remark,
+          date_of_birth: response.date_of_birth ? new Date(response.date_of_birth) : '',
+          anniversary_date: response.anniversary_date ? new Date(response.anniversary_date) : '',
+          gst_type: response.gst_type,
+          gstin: response.gstin,
+          pan_no: response.pan_no,
+          apply_tds: response.apply_tds,
+          login_access: response.login_access,
+          credit_limit: response.credit_limit,
+          opening_balance: response.opening_balance,
+          opening_balance_type: response.opening_balance_type,
+          membership: response.membership,
+          email: response.email,
+          // supplier_type: response.supplier_type,
+          // payment_terms: response.payment_terms
+        });
+
+        // Patch addresses safely
+        this.addresses.clear();
+        (response.address || []).forEach((address: any) =>
+          this.addresses.push(this.fb.group({
+            address_line_1: [address.address_line_1 || '', Validators.required],
+            address_line_2: [address.address_line_2 || ''],
+            city: [address.city || '', Validators.required],
+            state: [address.state || ''],
+            country: [address.country || ''],
+            pincode: [address.pincode || '', Validators.required],
+            address_type: [address.address_type || 'Billing']
+          }))
+        );
+
+        // Patch banks safely
+        this.banks.clear();
+        (response.bank_id || []).forEach((bank: any) =>
+          this.banks.push(this.fb.group({
+            bank_name: [bank.bank_name || '', Validators.required],
+            account_no: [bank.account_no || '', Validators.required],
+            branch_name: [bank.branch_name || ''],
+            account_holder_name: [bank.account_holder_name || ''],
+            bank_ifsc_code: [bank.bank_ifsc_code || '']
+          }))
+        );
+
+        this.isLoader = false;
+      }
     });
   }
 
@@ -145,17 +220,35 @@ export class CreatePartyComponent {
       bank_id: JSON.stringify(this.partyForm.value.banks)
     };
 
-    this.partyService.createParty(payload).subscribe({
-      next: (response: any) => {
-        console.log(response);
-        this.snackBar.open(response?.msg || 'Party created successfully!', 'Close', { duration: 3000 });
-        this.router.navigate(['/parties']);
-      },
-      error: (err) => {
-        console.error('Error creating party:', err);
-        this.snackBar.open('Failed to create party. Please try again.', 'Close', { duration: 3000 });
-      }
-    });
+    if (this.partyId) {
+      // Update existing party
+      this.partyService.updatePartyById(this.partyId, payload).subscribe({
+        next: (response: any) => {
+          this.isLoader = false;
+          this._toastrService.success(response?.msg ?? "Party updated successfully!");
+          this.router.navigate(['/parties']);
+        },
+        error: (err) => {
+          this.isLoader = false;
+          console.error('Error updating party:', err);
+          this._toastrService.error('Failed to update party. Please try again.');
+        }
+      });
+    } else {
+      // Create new party
+      this.partyService.createParty(payload).subscribe({
+        next: (response: any) => {
+          this.isLoader = false;
+          this._toastrService.success(response?.msg ?? "Party created successfully!");
+          this.router.navigate(['/parties']);
+        },
+        error: (err) => {
+          this.isLoader = false;
+          console.error('Error creating party:', err);
+          this._toastrService.error('Failed to create party. Please try again.');
+        }
+      });
+    }
   }
 
   // Helper getters for template
