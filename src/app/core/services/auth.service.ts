@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { API_URL, TOKEN_KEY } from '../../shared/constants';
 import { HttpClient } from '@angular/common/http';
 import { StorageService } from './storage.service';
+import { Observable } from 'rxjs';
+import { LoginResponse } from '../interfaces/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +16,8 @@ export class AuthService {
   ) { }
 
   // login user
-  login(username: string, password: string) {
-    return this._httpClient.post(`${API_URL}login/`, { username, password });
+  login(username: string, password: string): Observable<LoginResponse> {
+    return this._httpClient.post<LoginResponse>(`${API_URL}login/`, { username, password });
   }
 
   // logout user

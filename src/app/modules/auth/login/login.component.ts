@@ -10,6 +10,7 @@ import { NgClass, NgIf } from '@angular/common';
 import { NgxLoadingModule } from 'ngx-loading';
 import { LoaderComponent } from '../../../shared/components/loader/loader.component';
 import { ToastrService } from 'ngx-toastr';
+import { LoginResponse, UserLogin } from '../../../core/interfaces/auth';
 
 @Component({
   selector: 'app-login',
@@ -43,10 +44,10 @@ export class LoginComponent {
 
     this.isLoader = true;
 
-    const { username, password } = this.loginForm.value;
+    const { username, password }: UserLogin = this.loginForm.value;
 
     this._authService.login(username, password).subscribe({
-      next: (response: any) => {
+      next: (response: LoginResponse) => {
         this.isLoader = false;
         this._toastrService.success("Login successful!");
         this._authService.setToken(response.token);
