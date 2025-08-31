@@ -6,47 +6,41 @@
 
 <form [formGroup]="partyForm" (ngSubmit)="saveParty()" class="party-form">
   <!-- Basic Info -->
-  <mat-card class="mb-6 p-4">
+  <mat-card class="mb-6 p-4 !bg-white">
     <mat-card-title>Basic Information</mat-card-title>
     <div class="grid md:grid-cols-12 gap-4 mt-4">
       <div class="md:col-span-4">
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Full Name</mat-label>
           <input matInput formControlName="name" placeholder="Enter full name">
         </mat-form-field>
       </div>
 
       <div class="md:col-span-4">
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Company Name</mat-label>
           <input matInput formControlName="company_name" placeholder="Enter company name">
         </mat-form-field>
       </div>
 
       <div class="md:col-span-4">
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Email</mat-label>
           <input matInput formControlName="email" type="email" placeholder="Enter email">
         </mat-form-field>
       </div>
 
       <div class="md:col-span-4">
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Mobile No</mat-label>
           <input matInput formControlName="mobile_no" placeholder="Enter mobile number">
         </mat-form-field>
       </div>
 
       <div class="md:col-span-4">
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Telephone No</mat-label>
           <input matInput formControlName="telephone_no" placeholder="Enter telephone number">
         </mat-form-field>
       </div>
 
       <div class="md:col-span-4">
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>WhatsApp No</mat-label>
           <input matInput formControlName="whatsapp_no" placeholder="Enter WhatsApp number">
         </mat-form-field>
       </div>
@@ -59,8 +53,8 @@
 
       <div class="md:col-span-4">
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Date of Birth</mat-label>
-          <input matInput [matDatepicker]="dobPicker" formControlName="date_of_birth">
+          <input matInput [matDatepicker]="dobPicker" formControlName="date_of_birth"
+            placeholder="Select date of birth">
           <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
           <mat-datepicker #dobPicker></mat-datepicker>
         </mat-form-field>
@@ -68,8 +62,8 @@
 
       <div class="md:col-span-4">
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Anniversary Date</mat-label>
-          <input matInput [matDatepicker]="anniversaryPicker" formControlName="anniversary_date">
+          <input matInput [matDatepicker]="anniversaryPicker" formControlName="anniversary_date"
+            placeholder="Select anniversary date">
           <mat-datepicker-toggle matSuffix [for]="anniversaryPicker"></mat-datepicker-toggle>
           <mat-datepicker #anniversaryPicker></mat-datepicker>
         </mat-form-field>
@@ -77,7 +71,6 @@
 
       <div class="col-span-12">
         <mat-form-field appearance="outline" class="w-full md:col-span-2">
-          <mat-label>Remark</mat-label>
           <textarea matInput formControlName="remark" placeholder="Add remarks"></textarea>
         </mat-form-field>
       </div>
@@ -85,13 +78,13 @@
   </mat-card>
 
   <!-- GST & PAN -->
-  <mat-card class="mb-6 p-4">
+  <mat-card class="mb-6 p-4 !bg-white">
     <mat-card-title>GST & PAN Details</mat-card-title>
     <div class="grid md:grid-cols-12 gap-4 mt-4">
       <div class="md:col-span-4">
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>GST Type</mat-label>
           <mat-select formControlName="gst_type">
+            <mat-option value="">Select GST Type</mat-option>
             <mat-option value="UnRegistered">UnRegistered</mat-option>
             <mat-option value="Registered Regular">Registered Regular</mat-option>
             <mat-option value="Registered Composition">Registered Composition</mat-option>
@@ -103,15 +96,13 @@
 
       <div class="md:col-span-4">
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>GSTIN</mat-label>
-          <input matInput formControlName="gstin">
+          <input matInput formControlName="gstin" placeholder="Enter GSTIN">
         </mat-form-field>
       </div>
 
       <div class="md:col-span-4">
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>PAN Number</mat-label>
-          <input matInput formControlName="pan_no">
+          <input matInput formControlName="pan_no" placeholder="Enter PAN No">
         </mat-form-field>
       </div>
 
@@ -122,27 +113,25 @@
   </mat-card>
 
   <!-- Financial Info -->
-  <mat-card class="mb-6 p-4">
+  <mat-card class="mb-6 p-4 !bg-white">
     <mat-card-title>Financial Information</mat-card-title>
     <div class="grid md:grid-cols-12 gap-4 mt-4">
       <div class="md:col-span-4">
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Credit Limit</mat-label>
-          <input matInput type="number" formControlName="credit_limit">
+          <input matInput type="number" formControlName="credit_limit" placeholder="Enter credit limit">
         </mat-form-field>
       </div>
 
       <div class="md:col-span-4">
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Opening Balance</mat-label>
-          <input matInput type="number" formControlName="opening_balance">
+          <input matInput type="number" formControlName="opening_balance" placeholder="Enter opening balance">
         </mat-form-field>
       </div>
 
       <div class="md:col-span-4">
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Opening Balance Type</mat-label>
           <mat-select formControlName="opening_balance_type">
+            <mat-option value="">Select opening balance Type</mat-option>
             <mat-option value="Cr">Cr</mat-option>
             <mat-option value="Dr">Dr</mat-option>
           </mat-select>
@@ -151,29 +140,26 @@
 
       <div class="md:col-span-4">
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Membership</mat-label>
-          <input matInput formControlName="membership">
+          <input matInput formControlName="membership" placeholder="Enter membership">
         </mat-form-field>
       </div>
 
       <div class="md:col-span-4">
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Supplier Type</mat-label>
-          <input matInput formControlName="supplier_type">
+          <input matInput formControlName="supplier_type" placeholder="Enter supplier type">
         </mat-form-field>
       </div>
 
       <div class="md:col-span-4">
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Payment Terms</mat-label>
-          <input matInput formControlName="payment_terms">
+          <input matInput formControlName="payment_terms" placeholder="Enter payment terms">
         </mat-form-field>
       </div>
     </div>
   </mat-card>
 
   <!-- Addresses -->
-  <mat-card class="mb-6 p-4">
+  <mat-card class="mb-6 p-4 !bg-white">
     <mat-card-title>Addresses</mat-card-title>
     <div formArrayName="addresses">
       <ng-container *ngFor="let address of addresses.controls; let i=index" [formGroupName]="i">
@@ -182,62 +168,63 @@
           <div class="grid md:grid-cols-12 gap-4">
             <div class="md:col-span-4">
               <mat-form-field appearance="outline" class="w-full">
-                <mat-label>Address Line 1</mat-label>
-                <input matInput formControlName="address_line_1">
+                <input matInput formControlName="address_line_1" placeholder="Enter address line 1">
               </mat-form-field>
             </div>
 
             <div class="md:col-span-4">
               <mat-form-field appearance="outline" class="w-full">
-                <mat-label>Address Line 2</mat-label>
-                <input matInput formControlName="address_line_2">
+                <input matInput formControlName="address_line_2" placeholder="Enter address line 2">
               </mat-form-field>
             </div>
 
             <div class="md:col-span-4">
               <mat-form-field appearance="outline" class="w-full">
-                <mat-label>Country ID</mat-label>
-                <input matInput formControlName="country" type="number">
+                <input matInput formControlName="country" type="number" placeholder="Enter country (ex. 91)">
               </mat-form-field>
             </div>
 
             <div class="md:col-span-4">
               <mat-form-field appearance="outline" class="w-full">
-                <mat-label>State ID</mat-label>
-                <input matInput formControlName="state" type="number">
+                <input matInput formControlName="state" type="number" placeholder="Enter state (ex. 22)">
               </mat-form-field>
             </div>
 
             <div class="md:col-span-4">
               <mat-form-field appearance="outline" class="w-full">
-                <mat-label>City ID</mat-label>
-                <input matInput formControlName="city" type="number">
+                <input matInput formControlName="city" type="number" placeholder="Enter city (ex. 33)">
               </mat-form-field>
             </div>
 
             <div class="md:col-span-4">
               <mat-form-field appearance="outline" class="w-full">
-                <mat-label>Pincode</mat-label>
-                <input matInput formControlName="pincode" type="number">
+                <input matInput formControlName="pincode" type="number" placeholder="Enter pincode">
               </mat-form-field>
             </div>
 
             <div class="md:col-span-4">
               <mat-form-field appearance="outline" class="w-full">
-                <mat-label>Address Type</mat-label>
-                <input matInput formControlName="address_type">
+                <input matInput type="text" formControlName="address_type" placeholder="Enter address type">
               </mat-form-field>
             </div>
           </div>
-          <button mat-stroked-button color="warn" type="button" (click)="removeAddress(i)">Remove Address</button>
+          <div class="flex justify-end">
+            <button mat-stroked-button color="warn" type="button"
+              class="!border-red-500 !text-red-600 hover:!bg-red-50 transition" (click)="removeAddress(i)">Remove
+              Address</button>
+          </div>
         </div>
       </ng-container>
     </div>
-    <button mat-raised-button color="primary" type="button" (click)="addAddress()">Add Address</button>
+    <div class="flex justify-end">
+      <button mat-raised-button color="primary" type="button"
+        class="!bg-green-600 !text-white hover:!bg-green-700 !py-4 shadow-md transition" (click)="addAddress()">Add
+        Address</button>
+    </div>
   </mat-card>
 
   <!-- Banks -->
-  <mat-card class="mb-6 p-4">
+  <mat-card class="mb-6 p-4 !bg-white">
     <mat-card-title>Banks</mat-card-title>
     <div formArrayName="banks">
       <ng-container *ngFor="let bank of banks.controls; let i=index" [formGroupName]="i">
@@ -246,50 +233,56 @@
           <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
             <div class="md:col-span-4">
               <mat-form-field appearance="outline" class="w-full">
-                <mat-label>IFSC Code</mat-label>
-                <input matInput formControlName="bank_ifsc_code">
+                <input matInput formControlName="bank_ifsc_code" placeholder="Enter IFSC code">
               </mat-form-field>
             </div>
 
             <div class="md:col-span-4">
               <mat-form-field appearance="outline" class="w-full">
-                <mat-label>Bank Name</mat-label>
-                <input matInput formControlName="bank_name">
+                <input matInput formControlName="bank_name" placeholder="Enter bank name">
               </mat-form-field>
             </div>
 
             <div class="md:col-span-4">
               <mat-form-field appearance="outline" class="w-full">
-                <mat-label>Branch Name</mat-label>
-                <input matInput formControlName="branch_name">
+                <input matInput formControlName="branch_name" placeholder="Enter branch name">
               </mat-form-field>
             </div>
 
             <div class="md:col-span-4">
               <mat-form-field appearance="outline" class="w-full">
-                <mat-label>Account Number</mat-label>
-                <input matInput formControlName="account_no">
+                <input matInput formControlName="account_no" placeholder="Enter account number">
               </mat-form-field>
             </div>
 
             <div class="md:col-span-4">
               <mat-form-field appearance="outline" class="w-full">
-                <mat-label>Account Holder Name</mat-label>
-                <input matInput formControlName="account_holder_name">
+                <input matInput formControlName="account_holder_name" placeholder="Enter account holder name">
               </mat-form-field>
             </div>
           </div>
-          <button mat-stroked-button color="warn" type="button" (click)="removeBank(i)">Remove Bank</button>
+          <div class="flex justify-end">
+            <button mat-stroked-button type="button" class="!border-red-500 !text-red-600 hover:!bg-red-50 transition"
+              (click)="removeBank(i)">Remove Bank</button>
+          </div>
         </div>
       </ng-container>
     </div>
-    <button mat-raised-button color="primary" type="button" (click)="addBank()">Add Bank</button>
+    <div class="flex justify-end">
+      <button mat-raised-button type="button"
+        class="!bg-green-600 !text-white hover:!bg-green-700 !py-4 shadow-md transition" (click)="addBank()">Add
+        Bank</button>
+    </div>
   </mat-card>
 
   <!-- Submit -->
   <div class="flex items-center justify-end text-center mt-6 space-x-4">
-    <button mat-raised-button color="warn" type="button" [routerLink]="['/parties']">Cancel</button>
-    <button mat-raised-button color="accent" type="submit">Save Party</button>
+    <button mat-raised-button
+      class="!py-2 !rounded-md !text-black font-medium transition duration-200 !bg-gray-50 hover:!bg-gray-50 cursor-pointer shadow-md"
+      type="button" [routerLink]="['/parties']">Cancel</button>
+    <button mat-raised-button
+      class="!py-2 !rounded-md !text-white font-medium transition duration-200 !bg-indigo-600 hover:!bg-indigo-700 cursor-pointer shadow-md"
+      type="submit">Save Party</button>
   </div>
 </form>
 

@@ -68,7 +68,7 @@ export class CreatePartyComponent implements OnInit {
       login_access: [false],
       credit_limit: ['', Validators.required],
       opening_balance: ['', Validators.required],
-      opening_balance_type: ['Cr', Validators.required],
+      opening_balance_type: ['', Validators.required],
       membership: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       supplier_type: [''],
@@ -126,7 +126,7 @@ export class CreatePartyComponent implements OnInit {
             state: [address.state || ''],
             country: [address.country || ''],
             pincode: [address.pincode || '', Validators.required],
-            address_type: [address.address_type || 'Billing']
+            address_type: [address.address_type]
           }))
         );
 
