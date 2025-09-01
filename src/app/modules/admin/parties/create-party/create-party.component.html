@@ -57,10 +57,6 @@
         <mat-form-field appearance="outline" class="w-full">
           <input matInput formControlName="telephone_no" placeholder="Enter telephone number"
             oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)">
-          <mat-error
-            *ngIf="partyForm.get('telephone_no')?.hasError('pattern') && partyForm.get('telephone_no')?.touched">
-            Telephone number must be 10 digits
-          </mat-error>
         </mat-form-field>
       </div>
 
@@ -68,12 +64,6 @@
         <mat-form-field appearance="outline" class="w-full">
           <input matInput formControlName="whatsapp_no" placeholder="Enter WhatsApp number"
             oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)" />
-          <mat-error *ngIf="partyForm.get('whatsapp_no')?.hasError('required')">
-            WhatsApp number is required
-          </mat-error>
-          <mat-error *ngIf="partyForm.get('whatsapp_no')?.hasError('pattern')">
-            Please enter a valid 10-digit WhatsApp number
-          </mat-error>
         </mat-form-field>
       </div>
 
@@ -89,10 +79,6 @@
             (focus)="dobPicker.open()" (click)="dobPicker.open()">
           <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
           <mat-datepicker #dobPicker></mat-datepicker>
-
-          <mat-error *ngIf="partyForm.get('date_of_birth')?.hasError('date_of_birth')">
-            Date of Birth is required
-          </mat-error>
           <mat-error *ngIf="partyForm.errors?.['dobAfterAnniversary']">
             Date of Birth must be earlier than Anniversary Date
           </mat-error>
@@ -105,10 +91,6 @@
             placeholder="Select anniversary date" (focus)="anniversaryPicker.open()" (click)="anniversaryPicker.open()">
           <mat-datepicker-toggle matSuffix [for]="anniversaryPicker"></mat-datepicker-toggle>
           <mat-datepicker #anniversaryPicker></mat-datepicker>
-
-          <mat-error *ngIf="partyForm.get('anniversary_date')?.hasError('required')">
-            Anniversary Date is required
-          </mat-error>
 
           <mat-error *ngIf="partyForm.errors?.['dobAfterAnniversary']">
             Anniversary Date must be after Date of Birth
@@ -139,10 +121,6 @@
             <mat-option value="Input Service Distributor">Input Service Distributor</mat-option>
             <mat-option value="Ecommerce Operator">Ecommerce Operator</mat-option>
           </mat-select>
-
-          <mat-error *ngIf="partyForm.get('gst_type')?.hasError('required') && partyForm.get('gst_type')?.touched">
-            GST Type is required
-          </mat-error>
         </mat-form-field>
       </div>
 
@@ -150,9 +128,6 @@
         <mat-form-field appearance="outline" class="w-full">
           <input matInput formControlName="gstin" placeholder="Enter GSTIN"
             oninput="this.value = this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 15)">
-          <mat-error *ngIf="partyForm.get('gstin')?.hasError('pattern')">
-            Invalid GSTIN format. Example: <b>22ABCDE1234F1Z5</b>
-          </mat-error>
         </mat-form-field>
       </div>
 
@@ -263,9 +238,6 @@
               <mat-form-field appearance="outline" class="w-full">
                 <input matInput formControlName="pincode" type="number" placeholder="Enter pincode"
                   oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6)" />
-                <mat-error *ngIf="address.get('pincode')?.hasError('required') && address.get('pincode')?.touched">
-                  Pincode is required
-                </mat-error>
                 <mat-error *ngIf="address.get('pincode')?.hasError('pattern') && address.get('pincode')?.touched">
                   Pincode must be 6 digits
                 </mat-error>
@@ -337,9 +309,6 @@
                 <mat-form-field appearance="outline" class="w-full">
                   <input matInput formControlName="account_no" placeholder="Enter account number"
                     oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 18)" />
-                  <mat-error *ngIf="bank.get('account_no')?.hasError('required') && bank.get('account_no')?.touched">
-                    Account number is required
-                  </mat-error>
                 </mat-form-field>
               </div>
 

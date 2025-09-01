@@ -59,14 +59,14 @@ export class CreatePartyComponent implements OnInit {
       name: ['', Validators.required],
       company_name: ['', Validators.required],
       mobile_no: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10), Validators.maxLength(10)]],
-      telephone_no: ['', [Validators.pattern(/^[0-9]{6,12}$/)]],
-      whatsapp_no: ['', [Validators.pattern(/^[0-9]{10}$/)]],
-      remark: ['', Validators.required],
-      date_of_birth: ['', Validators.required],
-      anniversary_date: ['', Validators.required],
-      gst_type: ['', Validators.required],
-      gstin: ['', [Validators.pattern(/^([0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9-A-Z]{1})$/)]],
-      pan_no: ['', [Validators.pattern(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/)]],
+      telephone_no: [''],
+      whatsapp_no: [''],
+      remark: [''],
+      date_of_birth: [''],
+      anniversary_date: [''],
+      gst_type: [''],
+      gstin: [''],
+      pan_no: [''],
       apply_tds: [false],
       login_access: [false],
       credit_limit: ['', [Validators.min(0)]],
@@ -124,11 +124,11 @@ export class CreatePartyComponent implements OnInit {
         (response.address || []).forEach((address: any) =>
           getAddresses(this.partyForm).push(this._formBuilder.group({
             address_line_1: [address.address_line_1 || '', Validators.required],
-            address_line_2: [address.address_line_2 || ''],
-            country: ['', [Validators.required, Validators.pattern(/^[0-9]{1,3}$/)]],
-            state: ['', [Validators.required, Validators.pattern(/^[0-9]{1,3}$/)]],
-            city: ['', [Validators.required, Validators.pattern(/^[0-9]{1,3}$/)]],
-            pincode: ['', [Validators.required, Validators.pattern(/^[0-9]{6}$/)]],
+            address_line_2: [address.address_line_2 || '', Validators.required],
+            country: [''],
+            state: [''],
+            city: [''],
+            pincode: [''],
             address_type: [address.address_type]
           }))
         );
@@ -137,11 +137,11 @@ export class CreatePartyComponent implements OnInit {
         getBanks(this.partyForm).clear();
         (response.bank_id || []).forEach((bank: any) =>
           getBanks(this.partyForm).push(this._formBuilder.group({
-            bank_name: [bank.bank_name || '', Validators.required],
-            account_no: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(18)]],
+            bank_name: [bank.bank_name || ''],
+            account_no: [''],
             branch_name: [bank.branch_name || ''],
             account_holder_name: [bank.account_holder_name || ''],
-            bank_ifsc_code: ['', [Validators.required, Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]],
+            bank_ifsc_code: [''],
           }))
         );
 
@@ -163,7 +163,7 @@ export class CreatePartyComponent implements OnInit {
       city: ['',],
       state: [''],
       country: [''],
-      pincode: ['', [Validators.pattern(/^[0-9]{6}$/)]],
+      pincode: [''],
       address_type: ['']
     });
   }
@@ -183,11 +183,11 @@ export class CreatePartyComponent implements OnInit {
   // Create Bank FormGroup
   createBank(): FormGroup {
     return this._formBuilder.group({
-      bank_name: ['', Validators.required],
-      account_no: ['', [Validators.required, Validators.pattern(/^[0-9]{9,18}$/)]],
+      bank_name: [''],
+      account_no: [''],
       branch_name: [''],
       account_holder_name: [''],
-      bank_ifsc_code: ['', [Validators.required, Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)]]
+      bank_ifsc_code: ['']
     });
   }
 
