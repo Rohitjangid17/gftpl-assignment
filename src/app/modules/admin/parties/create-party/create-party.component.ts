@@ -20,7 +20,6 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-create-party',
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,

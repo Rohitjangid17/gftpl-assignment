@@ -12,6 +12,7 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-parties',
+  standalone: true,
   imports: [NgxSpinnerModule, CommonModule, MatTableModule, MatIconModule, MatButtonModule, MatButtonModule, BreadcrumbComponent, RouterModule, RouterLink],
   templateUrl: './parties.component.html',
   styleUrl: './parties.component.scss'
