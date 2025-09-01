@@ -1,365 +1,371 @@
-<app-breadcrumb title="Create Party" [breadcrumbs]="[
+<div class="flex flex-col h-screen overflow-hidden">
+  <app-breadcrumb title="Create Party" [breadcrumbs]="[
     { label: 'Dashboard', url: '/dashboard' },
     { label: 'Parties', url: '/parties' },
     { label: 'Create Party' }
   ]" />
 
-<form [formGroup]="partyForm" (ngSubmit)="saveParty()" class="party-form">
-  <!-- Basic Info -->
-  <mat-card class="mb-6 p-4 !bg-white">
-    <mat-card-title>Basic Information</mat-card-title>
-    <div class="grid md:grid-cols-12 gap-4 mt-4">
-      <div class="md:col-span-4">
-        <mat-form-field appearance="outline" class="w-full">
-          <input matInput formControlName="name" placeholder="Enter full name">
-          <mat-error *ngIf="partyForm.get('name')?.hasError('required') && partyForm.get('name')?.touched">
-            Name is required
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div class="md:col-span-4">
-        <mat-form-field appearance="outline" class="w-full">
-          <input matInput formControlName="company_name" placeholder="Enter company name">
-          <mat-error *ngIf="partyForm.get('company_name')?.hasError('required')">
-            Company name is required
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div class="md:col-span-4">
-        <mat-form-field appearance="outline" class="w-full">
-          <input matInput formControlName="email" type="email" placeholder="Enter email">
-          <mat-error *ngIf="partyForm.get('email')?.hasError('required') && partyForm.get('email')?.touched">
-            Email is required
-          </mat-error>
-          <mat-error *ngIf="partyForm.get('email')?.hasError('email') && partyForm.get('email')?.touched">
-            Please enter a valid email address
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div class="md:col-span-4">
-        <mat-form-field appearance="outline" class="w-full">
-          <input matInput formControlName="mobile_no" placeholder="Enter mobile number"
-            oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)" />
-
-          <mat-error *ngIf="partyForm.get('mobile_no')?.hasError('required')">
-            Mobile number is required
-          </mat-error>
-          <mat-error *ngIf="partyForm.get('mobile_no')?.hasError('pattern')">
-            Please enter a valid 10-digit mobile number
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div class="md:col-span-4">
-        <mat-form-field appearance="outline" class="w-full">
-          <input matInput formControlName="telephone_no" placeholder="Enter telephone number"
-            oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)">
-        </mat-form-field>
-      </div>
-
-      <div class="md:col-span-4">
-        <mat-form-field appearance="outline" class="w-full">
-          <input matInput formControlName="whatsapp_no" placeholder="Enter WhatsApp number"
-            oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)" />
-        </mat-form-field>
-      </div>
-
-      <div class="md:col-span-4">
-        <mat-slide-toggle formControlName="login_access">
-          Login Access
-        </mat-slide-toggle>
-      </div>
-
-      <div class="md:col-span-4">
-        <mat-form-field appearance="outline" class="w-full">
-          <input matInput [matDatepicker]="dobPicker" formControlName="date_of_birth" placeholder="Select date of birth"
-            (focus)="dobPicker.open()" (click)="dobPicker.open()">
-          <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
-          <mat-datepicker #dobPicker></mat-datepicker>
-          <mat-error *ngIf="partyForm.errors?.['dobAfterAnniversary']">
-            Date of Birth must be earlier than Anniversary Date
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div class="md:col-span-4">
-        <mat-form-field appearance="outline" class="w-full">
-          <input matInput [matDatepicker]="anniversaryPicker" formControlName="anniversary_date"
-            placeholder="Select anniversary date" (focus)="anniversaryPicker.open()" (click)="anniversaryPicker.open()">
-          <mat-datepicker-toggle matSuffix [for]="anniversaryPicker"></mat-datepicker-toggle>
-          <mat-datepicker #anniversaryPicker></mat-datepicker>
-
-          <mat-error *ngIf="partyForm.errors?.['dobAfterAnniversary']">
-            Anniversary Date must be after Date of Birth
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-
-      <div class="col-span-12">
-        <mat-form-field appearance="outline" class="w-full md:col-span-2">
-          <textarea matInput formControlName="remark" placeholder="Add remarks"></textarea>
-        </mat-form-field>
-      </div>
-    </div>
-  </mat-card>
-
-  <!-- GST & PAN -->
-  <mat-card class="mb-6 p-4 !bg-white">
-    <mat-card-title>GST & PAN Details</mat-card-title>
-    <div class="grid md:grid-cols-12 gap-4 mt-4">
-      <div class="md:col-span-4">
-        <mat-form-field appearance="outline" class="w-full">
-          <mat-select formControlName="gst_type">
-            <mat-option value="">Select GST Type</mat-option>
-            <mat-option value="UnRegistered">UnRegistered</mat-option>
-            <mat-option value="Registered Regular">Registered Regular</mat-option>
-            <mat-option value="Registered Composition">Registered Composition</mat-option>
-            <mat-option value="Input Service Distributor">Input Service Distributor</mat-option>
-            <mat-option value="Ecommerce Operator">Ecommerce Operator</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="md:col-span-4">
-        <mat-form-field appearance="outline" class="w-full">
-          <input matInput formControlName="gstin" placeholder="Enter GSTIN"
-            oninput="this.value = this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 15)">
-        </mat-form-field>
-      </div>
-
-      <div class="md:col-span-4">
-        <mat-form-field appearance="outline" class="w-full">
-          <input matInput formControlName="pan_no" placeholder="Enter PAN No"
-            oninput="this.value = this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 10)" />
-          <mat-error *ngIf="partyForm.get('pan_no')?.hasError('pattern')">
-            Invalid PAN format. Example: <b>ABCDE1234F</b>
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <div class="md:col-span-4">
-        <mat-checkbox formControlName="apply_tds">Apply TDS</mat-checkbox>
-      </div>
-    </div>
-  </mat-card>
-
-  <!-- Financial Info -->
-  <mat-card class="mb-6 p-4 !bg-white">
-    <mat-card-title>Financial Information</mat-card-title>
-    <div class="grid md:grid-cols-12 gap-4 mt-4">
-      <div class="md:col-span-4">
-        <mat-form-field appearance="outline" class="w-full">
-          <input matInput type="number" formControlName="credit_limit" placeholder="Enter credit limit">
-        </mat-form-field>
-      </div>
-
-      <div class="md:col-span-4">
-        <mat-form-field appearance="outline" class="w-full">
-          <input matInput type="number" formControlName="opening_balance" placeholder="Enter opening balance">
-        </mat-form-field>
-      </div>
-
-      <div class="md:col-span-4">
-        <mat-form-field appearance="outline" class="w-full">
-          <mat-select formControlName="opening_balance_type">
-            <mat-option value="">Select opening balance Type</mat-option>
-            <mat-option value="Cr">Cr</mat-option>
-            <mat-option value="Dr">Dr</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="md:col-span-4">
-        <mat-form-field appearance="outline" class="w-full">
-          <input matInput formControlName="membership" placeholder="Enter membership">
-        </mat-form-field>
-      </div>
-
-      <div class="md:col-span-4">
-        <mat-form-field appearance="outline" class="w-full">
-          <input matInput formControlName="supplier_type" placeholder="Enter supplier type">
-        </mat-form-field>
-      </div>
-
-      <div class="md:col-span-4">
-        <mat-form-field appearance="outline" class="w-full">
-          <input matInput formControlName="payment_terms" placeholder="Enter payment terms">
-        </mat-form-field>
-      </div>
-    </div>
-  </mat-card>
-
-  <!-- Addresses -->
-  <mat-card class="mb-6 p-4 !bg-white">
-    <mat-card-title>Addresses</mat-card-title>
-    <div formArrayName="addresses">
-      <ng-container *ngFor="let address of addresses.controls; let i=index" [formGroupName]="i">
-        <div class="mb-4 p-4 mt-4 border rounded-md shadow-sm">
-          <h4>Address {{i+1}}</h4>
-          <div class="grid md:grid-cols-12 gap-4">
-            <div class="md:col-span-4">
-              <mat-form-field appearance="outline" class="w-full">
-                <input matInput formControlName="address_line_1" placeholder="Enter address line 1">
-              </mat-form-field>
-            </div>
-
-            <div class="md:col-span-4">
-              <mat-form-field appearance="outline" class="w-full">
-                <input matInput formControlName="address_line_2" placeholder="Enter address line 2">
-              </mat-form-field>
-            </div>
-
-            <div class="md:col-span-4">
-              <mat-form-field appearance="outline" class="w-full">
-                <input matInput formControlName="country" type="number" placeholder="Enter country (ex. 91)">
-              </mat-form-field>
-            </div>
-
-            <div class="md:col-span-4">
-              <mat-form-field appearance="outline" class="w-full">
-                <input matInput formControlName="state" type="number" placeholder="Enter state (ex. 22)">
-              </mat-form-field>
-            </div>
-
-            <div class="md:col-span-4">
-              <mat-form-field appearance="outline" class="w-full">
-                <input matInput formControlName="city" type="number" placeholder="Enter city (ex. 33)">
-                <mat-error *ngIf="address.get('city')?.hasError('required') && address.get('city')?.touched">
-                  City is required
-                </mat-error>
-              </mat-form-field>
-            </div>
-
-            <div class="md:col-span-4">
-              <mat-form-field appearance="outline" class="w-full">
-                <input matInput formControlName="pincode" type="number" placeholder="Enter pincode"
-                  oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6)" />
-                <mat-error *ngIf="address.get('pincode')?.hasError('pattern') && address.get('pincode')?.touched">
-                  Pincode must be 6 digits
-                </mat-error>
-              </mat-form-field>
-            </div>
-
-            <div class="md:col-span-4">
-              <mat-form-field appearance="outline" class="w-full">
-                <input matInput type="text" formControlName="address_type" placeholder="Enter address type">
-              </mat-form-field>
-            </div>
+  <div class="flex-1 overflow-y-auto">
+    <form [formGroup]="partyForm" (ngSubmit)="saveParty()" class="party-form">
+      <!-- Basic Info -->
+      <mat-card class="mb-6 p-4 !bg-white">
+        <mat-card-title>Basic Information</mat-card-title>
+        <div class="grid md:grid-cols-12 gap-4 mt-4">
+          <div class="col-span-12 sm:col-span-6 md:col-span-4">
+            <mat-form-field appearance="outline" class="w-full">
+              <input matInput formControlName="name" placeholder="Enter full name">
+              <mat-error *ngIf="partyForm.get('name')?.hasError('required') && partyForm.get('name')?.touched">
+                Name is required
+              </mat-error>
+            </mat-form-field>
           </div>
-          <div class="flex justify-end">
-            <button mat-stroked-button color="warn" type="button"
-              class="!border-red-500 !text-red-600 hover:!bg-red-50 transition" (click)="removeAddress(i)">Remove
-              Address</button>
+
+          <div class="col-span-12 sm:col-span-6 md:col-span-4">
+            <mat-form-field appearance="outline" class="w-full">
+              <input matInput formControlName="company_name" placeholder="Enter company name">
+              <mat-error *ngIf="partyForm.get('company_name')?.hasError('required')">
+                Company name is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-span-12 sm:col-span-6 md:col-span-4">
+            <mat-form-field appearance="outline" class="w-full">
+              <input matInput formControlName="email" type="email" placeholder="Enter email">
+              <mat-error *ngIf="partyForm.get('email')?.hasError('required') && partyForm.get('email')?.touched">
+                Email is required
+              </mat-error>
+              <mat-error *ngIf="partyForm.get('email')?.hasError('email') && partyForm.get('email')?.touched">
+                Please enter a valid email address
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-span-12 sm:col-span-6 md:col-span-4">
+            <mat-form-field appearance="outline" class="w-full">
+              <input matInput formControlName="mobile_no" placeholder="Enter mobile number"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)" />
+
+              <mat-error *ngIf="partyForm.get('mobile_no')?.hasError('required')">
+                Mobile number is required
+              </mat-error>
+              <mat-error *ngIf="partyForm.get('mobile_no')?.hasError('pattern')">
+                Please enter a valid 10-digit mobile number
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-span-12 sm:col-span-6 md:col-span-4">
+            <mat-form-field appearance="outline" class="w-full">
+              <input matInput formControlName="telephone_no" placeholder="Enter telephone number"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)">
+            </mat-form-field>
+          </div>
+
+          <div class="col-span-12 sm:col-span-6 md:col-span-4">
+            <mat-form-field appearance="outline" class="w-full">
+              <input matInput formControlName="whatsapp_no" placeholder="Enter WhatsApp number"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)" />
+            </mat-form-field>
+          </div>
+
+          <div class="col-span-12 sm:col-span-6 md:col-span-4">
+            <mat-slide-toggle formControlName="login_access">
+              Login Access
+            </mat-slide-toggle>
+          </div>
+
+          <div class="col-span-12 sm:col-span-6 md:col-span-4">
+            <mat-form-field appearance="outline" class="w-full">
+              <input matInput [matDatepicker]="dobPicker" formControlName="date_of_birth"
+                placeholder="Select date of birth" (focus)="dobPicker.open()" (click)="dobPicker.open()">
+              <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+              <mat-datepicker #dobPicker></mat-datepicker>
+              <mat-error *ngIf="partyForm.errors?.['dobAfterAnniversary']">
+                Date of Birth must be earlier than Anniversary Date
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-span-12 sm:col-span-6 md:col-span-4">
+            <mat-form-field appearance="outline" class="w-full">
+              <input matInput [matDatepicker]="anniversaryPicker" formControlName="anniversary_date"
+                placeholder="Select anniversary date" (focus)="anniversaryPicker.open()"
+                (click)="anniversaryPicker.open()">
+              <mat-datepicker-toggle matSuffix [for]="anniversaryPicker"></mat-datepicker-toggle>
+              <mat-datepicker #anniversaryPicker></mat-datepicker>
+
+              <mat-error *ngIf="partyForm.errors?.['dobAfterAnniversary']">
+                Anniversary Date must be after Date of Birth
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+
+          <div class="col-span-12">
+            <mat-form-field appearance="outline" class="w-full md:col-span-2">
+              <textarea matInput formControlName="remark" placeholder="Add remarks"></textarea>
+            </mat-form-field>
           </div>
         </div>
-      </ng-container>
-    </div>
-    <div class="flex justify-end">
-      <button mat-raised-button color="primary" type="button"
-        class="!bg-green-600 !text-white hover:!bg-green-700 !py-4 shadow-md transition" (click)="addAddress()">Add
-        Address</button>
-    </div>
-  </mat-card>
+      </mat-card>
 
-  <!-- Banks -->
-  <ng-container *ngIf="banks.controls.length > 0">
-    <mat-card class="mb-6 p-4 !bg-white">
-      <mat-card-title>Banks</mat-card-title>
-      <div formArrayName="banks">
-        <ng-container *ngFor="let bank of banks.controls; let i=index" [formGroupName]="i">
-          <div class="mb-4 mt-4 p-4 border rounded-md shadow-sm">
-            <h4>Bank {{i+1}}</h4>
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
-              <div class="md:col-span-4">
-                <mat-form-field appearance="outline" class="w-full">
-                  <input matInput formControlName="bank_ifsc_code" placeholder="Enter IFSC code"
-                    oninput="this.value = this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 11)" />
-
-                  <mat-error
-                    *ngIf="partyForm.get('bank_ifsc_code')?.touched && partyForm.get('bank_ifsc_code')?.hasError('required')">
-                    IFSC Code is required
-                  </mat-error>
-                  <mat-error
-                    *ngIf="partyForm.get('bank_ifsc_code')?.touched && partyForm.get('bank_ifsc_code')?.hasError('pattern')">
-                    Invalid IFSC format. Example: <b>SBIN0001234</b>
-                  </mat-error>
-                </mat-form-field>
-              </div>
-
-              <div class="md:col-span-4">
-                <mat-form-field appearance="outline" class="w-full">
-                  <input matInput formControlName="bank_name" placeholder="Enter bank name">
-                  <mat-error *ngIf="bank.get('bank_name')?.hasError('required') && bank.get('bank_name')?.touched">
-                    Bank name is required
-                  </mat-error>
-                </mat-form-field>
-              </div>
-
-              <div class="md:col-span-4">
-                <mat-form-field appearance="outline" class="w-full">
-                  <input matInput formControlName="branch_name" placeholder="Enter branch name">
-                </mat-form-field>
-              </div>
-
-              <div class="md:col-span-4">
-                <mat-form-field appearance="outline" class="w-full">
-                  <input matInput formControlName="account_no" placeholder="Enter account number"
-                    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 18)" />
-                </mat-form-field>
-              </div>
-
-              <div class="md:col-span-4">
-                <mat-form-field appearance="outline" class="w-full">
-                  <input matInput formControlName="account_holder_name" placeholder="Enter account holder name">
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="flex justify-end">
-              <button mat-stroked-button type="button" class="!border-red-500 !text-red-600 hover:!bg-red-50 transition"
-                (click)="removeBank(i)">Remove Bank</button>
-            </div>
+      <!-- GST & PAN -->
+      <mat-card class="mb-6 p-4 !bg-white">
+        <mat-card-title>GST & PAN Details</mat-card-title>
+        <div class="grid md:grid-cols-12 gap-4 mt-4">
+          <div class="col-span-12 sm:col-span-6 md:col-span-4">
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-select formControlName="gst_type">
+                <mat-option value="">Select GST Type</mat-option>
+                <mat-option value="UnRegistered">UnRegistered</mat-option>
+                <mat-option value="Registered Regular">Registered Regular</mat-option>
+                <mat-option value="Registered Composition">Registered Composition</mat-option>
+                <mat-option value="Input Service Distributor">Input Service Distributor</mat-option>
+                <mat-option value="Ecommerce Operator">Ecommerce Operator</mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
-        </ng-container>
-      </div>
-      <div class="flex justify-end">
-        <button mat-raised-button type="button"
-          class="!bg-green-600 !text-white hover:!bg-green-700 !py-4 shadow-md transition" (click)="addBank()">Add
-          Bank</button>
-      </div>
-    </mat-card>
-  </ng-container>
 
-  <!-- Submit -->
-  <div class="flex items-center justify-end text-center mt-6 space-x-4">
-    <button mat-raised-button
-      class="!py-2 !rounded-md !text-black font-medium transition duration-200 !bg-gray-50 hover:!bg-gray-50 cursor-pointer shadow-md"
-      type="button" [routerLink]="['/parties']">Cancel</button>
+          <div class="col-span-12 sm:col-span-6 md:col-span-4">
+            <mat-form-field appearance="outline" class="w-full">
+              <input matInput formControlName="gstin" placeholder="Enter GSTIN"
+                oninput="this.value = this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 15)">
+            </mat-form-field>
+          </div>
 
-    <button mat-raised-button color="primary" type="submit"
-      class="!py-2 !rounded-md !text-white font-medium transition duration-200 flex justify-center items-center"
-      [disabled]="partyForm.invalid || isSaving" [ngClass]="{
+          <div class="col-span-12 sm:col-span-6 md:col-span-4">
+            <mat-form-field appearance="outline" class="w-full">
+              <input matInput formControlName="pan_no" placeholder="Enter PAN No"
+                oninput="this.value = this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 10)" />
+              <mat-error *ngIf="partyForm.get('pan_no')?.hasError('pattern')">
+                Invalid PAN format. Example: <b>ABCDE1234F</b>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-span-12 sm:col-span-6 md:col-span-4">
+            <mat-checkbox formControlName="apply_tds">Apply TDS</mat-checkbox>
+          </div>
+        </div>
+      </mat-card>
+
+      <!-- Financial Info -->
+      <mat-card class="mb-6 p-4 !bg-white">
+        <mat-card-title>Financial Information</mat-card-title>
+        <div class="grid md:grid-cols-12 gap-4 mt-4">
+          <div class="col-span-12 sm:col-span-6 md:col-span-4">
+            <mat-form-field appearance="outline" class="w-full">
+              <input matInput type="number" formControlName="credit_limit" placeholder="Enter credit limit">
+            </mat-form-field>
+          </div>
+
+          <div class="col-span-12 sm:col-span-6 md:col-span-4">
+            <mat-form-field appearance="outline" class="w-full">
+              <input matInput type="number" formControlName="opening_balance" placeholder="Enter opening balance">
+            </mat-form-field>
+          </div>
+
+          <div class="col-span-12 sm:col-span-6 md:col-span-4">
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-select formControlName="opening_balance_type">
+                <mat-option value="">Select opening balance Type</mat-option>
+                <mat-option value="Cr">Cr</mat-option>
+                <mat-option value="Dr">Dr</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-span-12 sm:col-span-6 md:col-span-4">
+            <mat-form-field appearance="outline" class="w-full">
+              <input matInput formControlName="membership" placeholder="Enter membership">
+            </mat-form-field>
+          </div>
+
+          <div class="col-span-12 sm:col-span-6 md:col-span-4">
+            <mat-form-field appearance="outline" class="w-full">
+              <input matInput formControlName="supplier_type" placeholder="Enter supplier type">
+            </mat-form-field>
+          </div>
+
+          <div class="col-span-12 sm:col-span-6 md:col-span-4">
+            <mat-form-field appearance="outline" class="w-full">
+              <input matInput formControlName="payment_terms" placeholder="Enter payment terms">
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card>
+
+      <!-- Addresses -->
+      <mat-card class="mb-6 p-4 !bg-white">
+        <mat-card-title>Addresses</mat-card-title>
+        <div formArrayName="addresses">
+          <ng-container *ngFor="let address of addresses.controls; let i=index" [formGroupName]="i">
+            <div class="mb-4 p-4 mt-4 border rounded-md shadow-sm">
+              <h4>Address {{i+1}}</h4>
+              <div class="grid md:grid-cols-12 gap-4">
+                <div class="col-span-12 sm:col-span-6 md:col-span-4">
+                  <mat-form-field appearance="outline" class="w-full">
+                    <input matInput formControlName="address_line_1" placeholder="Enter address line 1">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-span-12 sm:col-span-6 md:col-span-4">
+                  <mat-form-field appearance="outline" class="w-full">
+                    <input matInput formControlName="address_line_2" placeholder="Enter address line 2">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-span-12 sm:col-span-6 md:col-span-4">
+                  <mat-form-field appearance="outline" class="w-full">
+                    <input matInput formControlName="country" type="number" placeholder="Enter country (ex. 91)">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-span-12 sm:col-span-6 md:col-span-4">
+                  <mat-form-field appearance="outline" class="w-full">
+                    <input matInput formControlName="state" type="number" placeholder="Enter state (ex. 22)">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-span-12 sm:col-span-6 md:col-span-4">
+                  <mat-form-field appearance="outline" class="w-full">
+                    <input matInput formControlName="city" type="number" placeholder="Enter city (ex. 33)">
+                    <mat-error *ngIf="address.get('city')?.hasError('required') && address.get('city')?.touched">
+                      City is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-span-12 sm:col-span-6 md:col-span-4">
+                  <mat-form-field appearance="outline" class="w-full">
+                    <input matInput formControlName="pincode" type="number" placeholder="Enter pincode"
+                      oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6)" />
+                    <mat-error *ngIf="address.get('pincode')?.hasError('pattern') && address.get('pincode')?.touched">
+                      Pincode must be 6 digits
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-span-12 sm:col-span-6 md:col-span-4">
+                  <mat-form-field appearance="outline" class="w-full">
+                    <input matInput type="text" formControlName="address_type" placeholder="Enter address type">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flex justify-end">
+                <button mat-stroked-button color="warn" type="button"
+                  class="!border-red-500 !text-red-600 hover:!bg-red-50 transition" (click)="removeAddress(i)">Remove
+                  Address</button>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div class="flex justify-end">
+          <button mat-raised-button color="primary" type="button"
+            class="!bg-green-600 !text-white hover:!bg-green-700 !py-4 shadow-md transition" (click)="addAddress()">Add
+            Address</button>
+        </div>
+      </mat-card>
+
+      <!-- Banks -->
+      <ng-container *ngIf="banks.controls.length > 0">
+        <mat-card class="mb-6 p-4 !bg-white">
+          <mat-card-title>Banks</mat-card-title>
+          <div formArrayName="banks">
+            <ng-container *ngFor="let bank of banks.controls; let i=index" [formGroupName]="i">
+              <div class="mb-4 mt-4 p-4 border rounded-md shadow-sm">
+                <h4>Bank {{i+1}}</h4>
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                  <div class="col-span-12 sm:col-span-6 md:col-span-4">
+                    <mat-form-field appearance="outline" class="w-full">
+                      <input matInput formControlName="bank_ifsc_code" placeholder="Enter IFSC code"
+                        oninput="this.value = this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 11)" />
+
+                      <mat-error
+                        *ngIf="partyForm.get('bank_ifsc_code')?.touched && partyForm.get('bank_ifsc_code')?.hasError('required')">
+                        IFSC Code is required
+                      </mat-error>
+                      <mat-error
+                        *ngIf="partyForm.get('bank_ifsc_code')?.touched && partyForm.get('bank_ifsc_code')?.hasError('pattern')">
+                        Invalid IFSC format. Example: <b>SBIN0001234</b>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-span-12 sm:col-span-6 md:col-span-4">
+                    <mat-form-field appearance="outline" class="w-full">
+                      <input matInput formControlName="bank_name" placeholder="Enter bank name">
+                      <mat-error *ngIf="bank.get('bank_name')?.hasError('required') && bank.get('bank_name')?.touched">
+                        Bank name is required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-span-12 sm:col-span-6 md:col-span-4">
+                    <mat-form-field appearance="outline" class="w-full">
+                      <input matInput formControlName="branch_name" placeholder="Enter branch name">
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-span-12 sm:col-span-6 md:col-span-4">
+                    <mat-form-field appearance="outline" class="w-full">
+                      <input matInput formControlName="account_no" placeholder="Enter account number"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 18)" />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-span-12 sm:col-span-6 md:col-span-4">
+                    <mat-form-field appearance="outline" class="w-full">
+                      <input matInput formControlName="account_holder_name" placeholder="Enter account holder name">
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="flex justify-end">
+                  <button mat-stroked-button type="button"
+                    class="!border-red-500 !text-red-600 hover:!bg-red-50 transition" (click)="removeBank(i)">Remove
+                    Bank</button>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          <div class="flex justify-end">
+            <button mat-raised-button type="button"
+              class="!bg-green-600 !text-white hover:!bg-green-700 !py-4 shadow-md transition" (click)="addBank()">Add
+              Bank</button>
+          </div>
+        </mat-card>
+      </ng-container>
+
+      <!-- Submit -->
+      <div class="flex items-center justify-end text-center mt-6 space-x-4">
+        <button mat-raised-button
+          class="!py-2 !rounded-md !text-black font-medium transition duration-200 !bg-gray-50 hover:!bg-gray-50 cursor-pointer shadow-md"
+          type="button" [routerLink]="['/parties']">Cancel</button>
+
+        <button mat-raised-button color="primary" type="submit"
+          class="!py-2 !rounded-md !text-white font-medium transition duration-200 flex justify-center items-center"
+          [disabled]="partyForm.invalid || isSaving" [ngClass]="{
         '!bg-indigo-600 hover:!bg-indigo-700 cursor-pointer shadow-md': !partyForm.invalid && !isSaving,
         '!bg-slate-300 !text-slate-500 cursor-not-allowed shadow-none': partyForm.invalid || isSaving
       }">
 
-      <!-- Spinner -->
-      <ng-container *ngIf="isSaving">
-        <mat-progress-spinner mode="indeterminate" diameter="20" color="accent" class="mr-2 !inline-block">
-        </mat-progress-spinner>
-      </ng-container>
+          <!-- Spinner -->
+          <ng-container *ngIf="isSaving">
+            <mat-progress-spinner mode="indeterminate" diameter="20" color="accent" class="mr-2 !inline-block">
+            </mat-progress-spinner>
+          </ng-container>
 
-      <!-- Button text -->
-      <span>{{ isSaving ? 'Saving...' : 'Save Party' }}</span>
-    </button>
+          <!-- Button text -->
+          <span>{{ isSaving ? 'Saving...' : 'Save Party' }}</span>
+        </button>
+      </div>
+    </form>
   </div>
-</form>
 
-<ng-container *ngIf="isLoader">
-  <div class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 z-10">
-    <mat-progress-spinner mode="indeterminate" diameter="40" color="primary"></mat-progress-spinner>
-  </div>
-</ng-container>
+  <ng-container *ngIf="isLoader">
+    <div class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 z-10">
+      <mat-progress-spinner mode="indeterminate" diameter="40" color="primary"></mat-progress-spinner>
+    </div>
+  </ng-container>
+</div>

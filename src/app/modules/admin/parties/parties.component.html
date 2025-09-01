@@ -1,119 +1,127 @@
-<app-breadcrumb title="Parties" [breadcrumbs]="[
-    { label: 'Dashboard', url: '/dashboard' },
-    { label: 'Parties' }
-  ]" />
+<div class="flex flex-col h-screen overflow-hidden">
+  <app-breadcrumb title="Parties" [breadcrumbs]="[
+      { label: 'Dashboard', url: '/dashboard' },
+      { label: 'Parties' }
+    ]" />
 
-<div class="flex justify-end mb-4">
-  <button type="button" mat-raised-button color="primary"
-    class="!py-2 !rounded-md !text-white font-medium transition duration-200 !bg-indigo-600 hover:!bg-indigo-700 cursor-pointer shadow-md"
-    routerLink="/parties/create-party">
-    Create Party
-  </button>
-</div>
+  <div class="flex justify-end mb-4">
+    <button type="button" mat-raised-button color="primary"
+      class="!py-2 !rounded-md !text-white font-medium transition duration-200 !bg-indigo-600 hover:!bg-indigo-700 cursor-pointer shadow-md"
+      routerLink="/parties/create-party">
+      Create Party
+    </button>
+  </div>
+  <!-- Table -->
+  <div class="flex-1 overflow-y-auto">
+    <div class="overflow-x-auto">
+      <ng-container *ngIf="parties && parties.length > 0 && !isLoader">
+        <table mat-table [dataSource]="parties"
+          class="mat-elevation-z8 w-full !bg-white !shadow-lg border border-gray-200">
+          <!-- Name -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef class="whitespace-nowrap !border-b !border-gray-300"> Name </th>
+            <td mat-cell *matCellDef="let party" class="!border-b !border-gray-300"> {{ party.name !== "" ? party.name :
+              'N/A'
+              }}
+            </td>
+          </ng-container>
 
-<!-- Table -->
-<div class="overflow-x-auto">
-  <ng-container *ngIf="parties && parties.length > 0 && !isLoader">
-    <table mat-table [dataSource]="parties" class="mat-elevation-z8 w-full !bg-white !shadow-lg border border-gray-200">
-      <!-- Name -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef class="whitespace-nowrap !border-b !border-gray-300"> Name </th>
-        <td mat-cell *matCellDef="let party" class="!border-b !border-gray-300"> {{ party.name !== "" ? party.name :
-          'N/A'
-          }}
-        </td>
-      </ng-container>
+          <!-- Company -->
+          <ng-container matColumnDef="company_name">
+            <th mat-header-cell *matHeaderCellDef class="whitespace-nowrap !border-b !border-gray-300"> Company Name
+            </th>
+            <td mat-cell *matCellDef="let party" class="!border-b !border-gray-300"> {{ party.company_name !== "" ?
+              party.company_name : 'N/A' }} </td>
+          </ng-container>
 
-      <!-- Company -->
-      <ng-container matColumnDef="company_name">
-        <th mat-header-cell *matHeaderCellDef class="whitespace-nowrap !border-b !border-gray-300"> Company Name</th>
-        <td mat-cell *matCellDef="let party" class="!border-b !border-gray-300"> {{ party.company_name !== "" ?
-          party.company_name : 'N/A' }} </td>
-      </ng-container>
+          <!-- Mobile -->
+          <ng-container matColumnDef="mobile_no">
+            <th mat-header-cell *matHeaderCellDef class="whitespace-nowrap !border-b !border-gray-300"> Mobile </th>
+            <td mat-cell *matCellDef="let party" class="!border-b !border-gray-300"> {{ party.mobile_no !== "" ?
+              party.mobile_no :
+              'N/A' }} </td>
+          </ng-container>
 
-      <!-- Mobile -->
-      <ng-container matColumnDef="mobile_no">
-        <th mat-header-cell *matHeaderCellDef class="whitespace-nowrap !border-b !border-gray-300"> Mobile </th>
-        <td mat-cell *matCellDef="let party" class="!border-b !border-gray-300"> {{ party.mobile_no !== "" ?
-          party.mobile_no :
-          'N/A' }} </td>
-      </ng-container>
+          <!-- Email -->
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef class="whitespace-nowrap !border-b !border-gray-300"> Email </th>
+            <td mat-cell *matCellDef="let party" class="!border-b !border-gray-300"> {{ party.email !== "" ? party.email
+              :
+              'N/A' }}
+            </td>
+          </ng-container>
 
-      <!-- Email -->
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef class="whitespace-nowrap !border-b !border-gray-300"> Email </th>
-        <td mat-cell *matCellDef="let party" class="!border-b !border-gray-300"> {{ party.email !== "" ? party.email :
-          'N/A' }}
-        </td>
-      </ng-container>
-
-      <!-- GSTIN -->
-      <!-- <ng-container matColumnDef="gstin">
+          <!-- GSTIN -->
+          <!-- <ng-container matColumnDef="gstin">
         <th mat-header-cell *matHeaderCellDef> GSTIN </th>
         <td mat-cell *matCellDef="let party"> {{ party.gstin }} </td>
       </ng-container> -->
 
-      <!-- DOB -->
-      <ng-container matColumnDef="date_of_birth">
-        <th mat-header-cell *matHeaderCellDef class="whitespace-nowrap !border-b !border-gray-300"> Date of Birth </th>
-        <td mat-cell *matCellDef="let party" class="whitespace-nowrap !border-b !border-gray-300"> {{
-          party.date_of_birth | date }} </td>
-      </ng-container>
+          <!-- DOB -->
+          <ng-container matColumnDef="date_of_birth">
+            <th mat-header-cell *matHeaderCellDef class="whitespace-nowrap !border-b !border-gray-300"> Date of Birth
+            </th>
+            <td mat-cell *matCellDef="let party" class="whitespace-nowrap !border-b !border-gray-300"> {{
+              party.date_of_birth | date }} </td>
+          </ng-container>
 
-      <!-- Anniversary -->
-      <ng-container matColumnDef="anniversary_date">
-        <th mat-header-cell *matHeaderCellDef class="whitespace-nowrap !border-b !border-gray-300"> Anniversary </th>
-        <td mat-cell *matCellDef="let party" class="whitespace-nowrap !border-b !border-gray-300"> {{
-          party.anniversary_date | date }} </td>
-      </ng-container>
+          <!-- Anniversary -->
+          <ng-container matColumnDef="anniversary_date">
+            <th mat-header-cell *matHeaderCellDef class="whitespace-nowrap !border-b !border-gray-300"> Anniversary
+            </th>
+            <td mat-cell *matCellDef="let party" class="whitespace-nowrap !border-b !border-gray-300"> {{
+              party.anniversary_date | date }} </td>
+          </ng-container>
 
-      <!-- Active Status Column -->
-      <ng-container matColumnDef="is_active">
-        <th mat-header-cell *matHeaderCellDef class="px-4 py-2 text-center !border-b !border-gray-300">Active</th>
-        <td mat-cell *matCellDef="let party" class="px-4 py-2 text-center !border-b !border-gray-300">
-          <span
-            [ngClass]="party.is_active ? 'text-green-600 bg-green-300 font-medium px-3 !text-xs py-1 rounded-full' : ' text-red-600 bg-red-300 font-medium px-3 !text-xs py-1 rounded-full'">
-            {{ party.is_active ? 'Active' : 'Inactive' }}
-          </span>
-        </td>
-      </ng-container>
+          <!-- Active Status Column -->
+          <ng-container matColumnDef="is_active">
+            <th mat-header-cell *matHeaderCellDef class="px-4 py-2 text-center !border-b !border-gray-300">Active</th>
+            <td mat-cell *matCellDef="let party" class="px-4 py-2 text-center !border-b !border-gray-300">
+              <span
+                [ngClass]="party.is_active ? 'text-green-600 bg-green-300 font-medium px-3 !text-xs py-1 rounded-full' : ' text-red-600 bg-red-300 font-medium px-3 !text-xs py-1 rounded-full'">
+                {{ party.is_active ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+          </ng-container>
 
-      <!-- Actions -->
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef class="whitespace-nowrap !border-b !border-gray-300"> Actions </th>
-        <td mat-cell *matCellDef="let party" class="whitespace-nowrap !border-b !border-gray-300">
-          <button mat-icon-button color="primary" class="!text-sm !text-blue-500"
-            [routerLink]="['/parties/update-party/', party.id]">
-            <mat-icon class="!text-xl">edit</mat-icon>
+          <!-- Actions -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef class="whitespace-nowrap !border-b !border-gray-300"> Actions </th>
+            <td mat-cell *matCellDef="let party" class="whitespace-nowrap !border-b !border-gray-300">
+              <button mat-icon-button color="primary" class="!text-sm !text-blue-500"
+                [routerLink]="['/parties/update-party/', party.id]">
+                <mat-icon class="!text-xl">edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" class="!text-sm !text-red-500" (click)="deleteParty(party?.id)">
+                <mat-icon class="!text-xl">delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <!-- Render rows -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </ng-container>
+      <ng-container *ngIf="(!parties || parties.length === 0) && !isLoader">
+        <div class=" w-full text-center py-10 text-gray-500">
+          <h2 class="text-lg text-black font-medium">No parties found</h2>
+          <p class="text-sm text-gray-400 mt-2">
+            You currently have no parties in the system. Click the button below to create your first party.
+          </p>
+          <button type="button" mat-raised-button color="primary"
+            class="!py-2 !mt-3 !rounded-md !text-white font-medium transition duration-200 !bg-indigo-600 hover:!bg-indigo-700 cursor-pointer shadow-md"
+            routerLink="/parties/create-party">
+            Create Party
           </button>
-          <button mat-icon-button color="warn" class="!text-sm !text-red-500" (click)="deleteParty(party?.id)">
-            <mat-icon class="!text-xl">delete</mat-icon>
-          </button>
-        </td>
+        </div>
       </ng-container>
+    </div>
+  </div>
 
-      <!-- Render rows -->
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  </ng-container>
-  <ng-container *ngIf="(!parties || parties.length === 0) && !isLoader">
-    <div class=" w-full text-center py-10 text-gray-500">
-      <h2 class="text-lg text-black font-medium">No parties found</h2>
-      <p class="text-sm text-gray-400 mt-2">
-        You currently have no parties in the system. Click the button below to create your first party.
-      </p>
-      <button type="button" mat-raised-button color="primary"
-        class="!py-2 !mt-3 !rounded-md !text-white font-medium transition duration-200 !bg-indigo-600 hover:!bg-indigo-700 cursor-pointer shadow-md"
-        routerLink="/parties/create-party">
-        Create Party
-      </button>
+  <ng-container *ngIf="isLoader">
+    <div class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 z-10">
+      <mat-progress-spinner mode="indeterminate" diameter="40" color="primary"></mat-progress-spinner>
     </div>
   </ng-container>
 </div>
-
-<ng-container *ngIf="isLoader">
-  <div class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 z-10">
-    <mat-progress-spinner mode="indeterminate" diameter="40" color="primary"></mat-progress-spinner>
-  </div>
-</ng-container>
