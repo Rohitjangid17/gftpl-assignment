@@ -1,3 +1,5 @@
 <main class="bg-gray-200">
-  <router-outlet />
+  <ng-container *ngIf="_authService.authChecked$ | async">
+    <router-outlet />
+  </ng-container>
 </main>
