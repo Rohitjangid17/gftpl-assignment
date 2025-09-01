@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { AuthService } from '../../../core/services/auth.service';
-import { NgClass, NgIf } from '@angular/common';
+import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { LoginResponse, UserLogin } from '../../../core/interfaces/auth';
 import { ToastrService } from '../../../core/services/toastr.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
@@ -14,7 +14,7 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [NgClass, NgIf, ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatCardModule, NgxSpinnerModule],
+  imports: [NgClass, CommonModule, NgIf, ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatCardModule, NgxSpinnerModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })

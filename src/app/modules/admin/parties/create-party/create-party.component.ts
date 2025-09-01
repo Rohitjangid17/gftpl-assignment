@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -35,7 +35,8 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
     MatSlideToggleModule,
     RouterLink,
     RouterModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgClass
   ],
   templateUrl: './create-party.component.html',
   styleUrls: ['./create-party.component.scss']
