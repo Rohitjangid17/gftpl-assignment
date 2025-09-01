@@ -1,10 +1,13 @@
 import { Routes } from '@angular/router';
-import { AUTH_ROUTES } from './modules/auth/auth.routes';
 import { PARTIES_ROUTES } from './modules/admin/parties/parties.routes';
+import { AUTH_ROUTES } from './modules/auth/auth.routes';
 
-export const routes: Routes = [
+export const serverRoutes: Routes = [
   ...AUTH_ROUTES,
-  ...PARTIES_ROUTES,
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: '**', redirectTo: 'login' },
+  ...PARTIES_ROUTES.map(route => ({
+    ...route,
+    children: route.children?.filter(
+      child => child.path !== 'parties/update-party/:id'
+    ),
+  })),
 ];
