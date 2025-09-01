@@ -17,7 +17,6 @@ import { getAddresses, getBanks } from '../../../../utils/form-utils';
 import { ToastrService } from '../../../../core/services/toastr.service';
 import { dobBeforeAnniversaryValidator } from '../../../../utils/date-range.validator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Address } from '../../../../core/interfaces/party';
 
 @Component({
   selector: 'app-create-party',
@@ -95,7 +94,6 @@ export class CreatePartyComponent implements OnInit {
     this.isLoader = true;
     this._partyService.getPartyById(id).subscribe({
       next: (response) => {
-        console.log("get by id res ", response);
         this.partyForm.patchValue({
           name: response.name,
           company_name: response.company_name,
@@ -205,6 +203,8 @@ export class CreatePartyComponent implements OnInit {
 
   // Submit Form
   saveParty() {
+    this.isSaving = true;
+
     // Format dates as YYYY-MM-DD
     const dob = this.partyForm.value.date_of_birth
       ? new Date(this.partyForm.value.date_of_birth).toISOString().split('T')[0]
@@ -225,12 +225,16 @@ export class CreatePartyComponent implements OnInit {
       // Update existing party
       this._partyService.updatePartyById(this.partyId, payload).subscribe({
         next: (response: any) => {
-          this.isLoader = false;
-          this._toastrService.success(response?.msg ?? "Party updated successfully!");
-          this._router.navigate(['/parties']);
+          this.isSaving = false;
+          if (response.success) {
+            this._toastrService.success(response?.msg ?? "Party updated successfully!");
+            this._router.navigate(['/parties']);
+          } else {
+            this._toastrService.error(response?.msg ?? "Failed to update party.");
+          }
         },
         error: (err) => {
-          this.isLoader = false;
+          this.isSaving = false;
           console.error('Error updating party:', err);
           this._toastrService.error('Failed to update party. Please try again.');
         }
@@ -239,12 +243,12 @@ export class CreatePartyComponent implements OnInit {
       // Create new party
       this._partyService.createParty(payload).subscribe({
         next: (response: any) => {
-          this.isLoader = false;
+          this.isSaving = false;
           this._toastrService.success(response?.msg ?? "Party created successfully!");
           this._router.navigate(['/parties']);
         },
         error: (err) => {
-          this.isLoader = false;
+          this.isSaving = false;
           console.error('Error creating party:', err);
           this._toastrService.error('Failed to create party. Please try again.');
         }
