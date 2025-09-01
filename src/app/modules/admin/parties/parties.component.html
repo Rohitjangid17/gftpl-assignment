@@ -106,6 +106,9 @@
     </div>
   </ng-container>
 </div>
-<ngx-spinner bdColor="rgba(0, 0, 0, 0.6)" size="large" color="#fff" type="square-jelly-box" [fullScreen]="true">
-  <p style="color: white"> Loading... </p>
-</ngx-spinner>
+
+<ng-container *ngIf="isLoader">
+  <div class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 z-10">
+    <mat-progress-spinner mode="indeterminate" diameter="40" color="primary"></mat-progress-spinner>
+  </div>
+</ng-container>

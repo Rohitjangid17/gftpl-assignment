@@ -32,18 +32,21 @@
 
         <!-- Button -->
         <button mat-raised-button color="primary" type="submit"
-          class="w-full !py-2 !rounded-md !text-white font-medium transition duration-200"
-          [disabled]="loginForm.invalid" [ngClass]="{
-            '!bg-indigo-600 hover:!bg-indigo-700 cursor-pointer shadow-md': !loginForm.invalid,
-            '!bg-slate-300 !text-slate-500 cursor-not-allowed shadow-none': loginForm.invalid
-          }">
-          Login
+          class="w-full !py-2 !rounded-md !text-white font-medium transition duration-200 flex justify-center items-center"
+          [disabled]="loginForm.invalid || isLoader" [ngClass]="{
+    '!bg-indigo-600 hover:!bg-indigo-700 cursor-pointer shadow-md': !loginForm.invalid && !isLoader,
+    '!bg-slate-300 !text-slate-500 cursor-not-allowed shadow-none': loginForm.invalid || isLoader
+  }">
+          <!-- Spinner -->
+          <ng-container *ngIf="isLoader">
+            <mat-progress-spinner mode="indeterminate" diameter="20" color="accent" class="mr-2 !inline-block">
+            </mat-progress-spinner>
+          </ng-container>
+
+          <!-- Button text -->
+          <span>{{ isLoader ? 'Logging in...' : 'Login' }}</span>
         </button>
       </form>
     </mat-card>
   </div>
 </div>
-
-<ngx-spinner bdColor="rgba(0, 0, 0, 0.6)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
-  <p style="color: white"> Loading... </p>
-</ngx-spinner>

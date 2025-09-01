@@ -294,73 +294,75 @@
   </mat-card>
 
   <!-- Banks -->
-  <mat-card class="mb-6 p-4 !bg-white">
-    <mat-card-title>Banks</mat-card-title>
-    <div formArrayName="banks">
-      <ng-container *ngFor="let bank of banks.controls; let i=index" [formGroupName]="i">
-        <div class="mb-4 mt-4 p-4 border rounded-md shadow-sm">
-          <h4>Bank {{i+1}}</h4>
-          <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
-            <div class="md:col-span-4">
-              <mat-form-field appearance="outline" class="w-full">
-                <input matInput formControlName="bank_ifsc_code" placeholder="Enter IFSC code"
-                  oninput="this.value = this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 11)" />
+  <ng-container *ngIf="banks.controls.length > 0">
+    <mat-card class="mb-6 p-4 !bg-white">
+      <mat-card-title>Banks</mat-card-title>
+      <div formArrayName="banks">
+        <ng-container *ngFor="let bank of banks.controls; let i=index" [formGroupName]="i">
+          <div class="mb-4 mt-4 p-4 border rounded-md shadow-sm">
+            <h4>Bank {{i+1}}</h4>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+              <div class="md:col-span-4">
+                <mat-form-field appearance="outline" class="w-full">
+                  <input matInput formControlName="bank_ifsc_code" placeholder="Enter IFSC code"
+                    oninput="this.value = this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 11)" />
 
-                <mat-error
-                  *ngIf="partyForm.get('bank_ifsc_code')?.touched && partyForm.get('bank_ifsc_code')?.hasError('required')">
-                  IFSC Code is required
-                </mat-error>
-                <mat-error
-                  *ngIf="partyForm.get('bank_ifsc_code')?.touched && partyForm.get('bank_ifsc_code')?.hasError('pattern')">
-                  Invalid IFSC format. Example: <b>SBIN0001234</b>
-                </mat-error>
-              </mat-form-field>
+                  <mat-error
+                    *ngIf="partyForm.get('bank_ifsc_code')?.touched && partyForm.get('bank_ifsc_code')?.hasError('required')">
+                    IFSC Code is required
+                  </mat-error>
+                  <mat-error
+                    *ngIf="partyForm.get('bank_ifsc_code')?.touched && partyForm.get('bank_ifsc_code')?.hasError('pattern')">
+                    Invalid IFSC format. Example: <b>SBIN0001234</b>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="md:col-span-4">
+                <mat-form-field appearance="outline" class="w-full">
+                  <input matInput formControlName="bank_name" placeholder="Enter bank name">
+                  <mat-error *ngIf="bank.get('bank_name')?.hasError('required') && bank.get('bank_name')?.touched">
+                    Bank name is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="md:col-span-4">
+                <mat-form-field appearance="outline" class="w-full">
+                  <input matInput formControlName="branch_name" placeholder="Enter branch name">
+                </mat-form-field>
+              </div>
+
+              <div class="md:col-span-4">
+                <mat-form-field appearance="outline" class="w-full">
+                  <input matInput formControlName="account_no" placeholder="Enter account number"
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 18)" />
+                  <mat-error *ngIf="bank.get('account_no')?.hasError('required') && bank.get('account_no')?.touched">
+                    Account number is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="md:col-span-4">
+                <mat-form-field appearance="outline" class="w-full">
+                  <input matInput formControlName="account_holder_name" placeholder="Enter account holder name">
+                </mat-form-field>
+              </div>
             </div>
-
-            <div class="md:col-span-4">
-              <mat-form-field appearance="outline" class="w-full">
-                <input matInput formControlName="bank_name" placeholder="Enter bank name">
-                <mat-error *ngIf="bank.get('bank_name')?.hasError('required') && bank.get('bank_name')?.touched">
-                  Bank name is required
-                </mat-error>
-              </mat-form-field>
-            </div>
-
-            <div class="md:col-span-4">
-              <mat-form-field appearance="outline" class="w-full">
-                <input matInput formControlName="branch_name" placeholder="Enter branch name">
-              </mat-form-field>
-            </div>
-
-            <div class="md:col-span-4">
-              <mat-form-field appearance="outline" class="w-full">
-                <input matInput formControlName="account_no" placeholder="Enter account number"
-                  oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 18)" />
-                <mat-error *ngIf="bank.get('account_no')?.hasError('required') && bank.get('account_no')?.touched">
-                  Account number is required
-                </mat-error>
-              </mat-form-field>
-            </div>
-
-            <div class="md:col-span-4">
-              <mat-form-field appearance="outline" class="w-full">
-                <input matInput formControlName="account_holder_name" placeholder="Enter account holder name">
-              </mat-form-field>
+            <div class="flex justify-end">
+              <button mat-stroked-button type="button" class="!border-red-500 !text-red-600 hover:!bg-red-50 transition"
+                (click)="removeBank(i)">Remove Bank</button>
             </div>
           </div>
-          <div class="flex justify-end">
-            <button mat-stroked-button type="button" class="!border-red-500 !text-red-600 hover:!bg-red-50 transition"
-              (click)="removeBank(i)">Remove Bank</button>
-          </div>
-        </div>
-      </ng-container>
-    </div>
-    <div class="flex justify-end">
-      <button mat-raised-button type="button"
-        class="!bg-green-600 !text-white hover:!bg-green-700 !py-4 shadow-md transition" (click)="addBank()">Add
-        Bank</button>
-    </div>
-  </mat-card>
+        </ng-container>
+      </div>
+      <div class="flex justify-end">
+        <button mat-raised-button type="button"
+          class="!bg-green-600 !text-white hover:!bg-green-700 !py-4 shadow-md transition" (click)="addBank()">Add
+          Bank</button>
+      </div>
+    </mat-card>
+  </ng-container>
 
   <!-- Submit -->
   <div class="flex items-center justify-end text-center mt-6 space-x-4">
@@ -369,16 +371,26 @@
       type="button" [routerLink]="['/parties']">Cancel</button>
 
     <button mat-raised-button color="primary" type="submit"
-      class="!py-2 !rounded-md !text-white font-medium transition duration-200" [disabled]="partyForm.invalid"
-      [ngClass]="{
-            '!bg-indigo-600 hover:!bg-indigo-700 cursor-pointer shadow-md': !partyForm.invalid,
-            '!bg-slate-300 !text-slate-500 cursor-not-allowed shadow-none': partyForm.invalid
-          }">
-      Save Party
+      class="!py-2 !rounded-md !text-white font-medium transition duration-200 flex justify-center items-center"
+      [disabled]="partyForm.invalid || isSaving" [ngClass]="{
+        '!bg-indigo-600 hover:!bg-indigo-700 cursor-pointer shadow-md': !partyForm.invalid && !isSaving,
+        '!bg-slate-300 !text-slate-500 cursor-not-allowed shadow-none': partyForm.invalid || isSaving
+      }">
+
+      <!-- Spinner -->
+      <ng-container *ngIf="isSaving">
+        <mat-progress-spinner mode="indeterminate" diameter="20" color="accent" class="mr-2 !inline-block">
+        </mat-progress-spinner>
+      </ng-container>
+
+      <!-- Button text -->
+      <span>{{ isSaving ? 'Saving...' : 'Save Party' }}</span>
     </button>
   </div>
 </form>
 
-<ngx-spinner bdColor="rgba(0, 0, 0, 0.6)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
-  <p style="color: white"> Loading... </p>
-</ngx-spinner>
+<ng-container *ngIf="isLoader">
+  <div class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 z-10">
+    <mat-progress-spinner mode="indeterminate" diameter="40" color="primary"></mat-progress-spinner>
+  </div>
+</ng-container>

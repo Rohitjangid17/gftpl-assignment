@@ -16,7 +16,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { getAddresses, getBanks } from '../../../../utils/form-utils';
 import { ToastrService } from '../../../../core/services/toastr.service';
 import { dobBeforeAnniversaryValidator } from '../../../../utils/date-range.validator';
-import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Address } from '../../../../core/interfaces/party';
 
 @Component({
   selector: 'app-create-party',
@@ -35,8 +36,8 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
     MatSlideToggleModule,
     RouterLink,
     RouterModule,
-    NgxSpinnerModule,
-    NgClass
+    NgClass,
+    MatProgressSpinnerModule
   ],
   templateUrl: './create-party.component.html',
   styleUrls: ['./create-party.component.scss']
@@ -44,6 +45,8 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 export class CreatePartyComponent implements OnInit {
   partyForm: FormGroup;
   partyId: number | null = null;
+  isLoader: boolean = false;
+  isSaving: boolean = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -51,7 +54,6 @@ export class CreatePartyComponent implements OnInit {
     private _router: Router,
     private _toastrService: ToastrService,
     private _activateRoute: ActivatedRoute,
-    private _spinnerService: NgxSpinnerService
   ) {
     this.partyForm = this._formBuilder.group({
       name: ['', Validators.required],
@@ -70,7 +72,7 @@ export class CreatePartyComponent implements OnInit {
       credit_limit: ['', [Validators.min(0)]],
       opening_balance: ['', [Validators.min(0)]],
       opening_balance_type: ['', Validators.required],
-      membership: ['', Validators.required],
+      membership: ['',],
       email: ['', [Validators.required, Validators.email]],
       supplier_type: [''],
       payment_terms: [''],
@@ -90,7 +92,7 @@ export class CreatePartyComponent implements OnInit {
 
   // get party by id
   getPartyById(id: number) {
-    this._spinnerService.show();
+    this.isLoader = true;
     this._partyService.getPartyById(id).subscribe({
       next: (response) => {
         console.log("get by id res ", response);
@@ -143,7 +145,12 @@ export class CreatePartyComponent implements OnInit {
           }))
         );
 
-        this._spinnerService.hide();
+        this.isLoader = false;
+      },
+      error: (err) => {
+        this.isLoader = false;
+        console.error('Error fetching party:', err);
+        this._toastrService.error('Failed to fetch party details. Please try again.');
       }
     });
   }
@@ -152,11 +159,11 @@ export class CreatePartyComponent implements OnInit {
   createAddress(): FormGroup {
     return this._formBuilder.group({
       address_line_1: ['', Validators.required],
-      address_line_2: [''],
-      city: ['', Validators.required],
+      address_line_2: ['', Validators.required],
+      city: ['',],
       state: [''],
       country: [''],
-      pincode: ['', [Validators.required, Validators.required, Validators.pattern(/^[0-9]{6}$/)]],
+      pincode: ['', [Validators.pattern(/^[0-9]{6}$/)]],
       address_type: ['']
     });
   }
@@ -218,12 +225,12 @@ export class CreatePartyComponent implements OnInit {
       // Update existing party
       this._partyService.updatePartyById(this.partyId, payload).subscribe({
         next: (response: any) => {
-          this._spinnerService.hide();
+          this.isLoader = false;
           this._toastrService.success(response?.msg ?? "Party updated successfully!");
           this._router.navigate(['/parties']);
         },
         error: (err) => {
-          this._spinnerService.hide();
+          this.isLoader = false;
           console.error('Error updating party:', err);
           this._toastrService.error('Failed to update party. Please try again.');
         }
@@ -232,12 +239,12 @@ export class CreatePartyComponent implements OnInit {
       // Create new party
       this._partyService.createParty(payload).subscribe({
         next: (response: any) => {
-          this._spinnerService.hide();
+          this.isLoader = false;
           this._toastrService.success(response?.msg ?? "Party created successfully!");
           this._router.navigate(['/parties']);
         },
         error: (err) => {
-          this._spinnerService.hide();
+          this.isLoader = false;
           console.error('Error creating party:', err);
           this._toastrService.error('Failed to create party. Please try again.');
         }
