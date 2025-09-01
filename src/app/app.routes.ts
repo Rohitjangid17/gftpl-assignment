@@ -4,10 +4,7 @@ import { AUTH_ROUTES } from './modules/auth/auth.routes';
 
 export const appRoutes: Routes = [
   ...AUTH_ROUTES,
-  ...PARTIES_ROUTES.map(route => ({
-    ...route,
-    children: route.children?.filter(
-      child => child.path !== 'parties/update-party/:id'
-    ),
-  })),
+  ...PARTIES_ROUTES,
+  { path: '', redirectTo: 'parties', pathMatch: 'full' },
+  { path: '**', redirectTo: 'parties' },
 ];
