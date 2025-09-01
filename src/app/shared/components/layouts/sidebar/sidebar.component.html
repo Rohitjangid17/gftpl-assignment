@@ -3,17 +3,20 @@
 </mat-toolbar>
 
 <mat-nav-list class="!px-2">
-  <a mat-list-item routerLink="/parties" class="!text-white" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+  <a mat-list-item routerLink="/parties" class="!text-white" routerLinkActive="active-link"
+    [routerLinkActiveOptions]="{ exact: false  }">
     <mat-icon class="mr-2 !text-white">groups</mat-icon>
     <span class="-mt-4 !text-white">Parties</span>
   </a>
 
-  <a mat-list-item routerLink="/users" class="!text-white" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+  <a mat-list-item routerLink="/users" class="!text-white" routerLinkActive="active-link"
+    [routerLinkActiveOptions]="{ exact: false  }">
     <mat-icon class="mr-2 !text-white">person</mat-icon>
     <span class="-mt-4 !text-white">Users</span>
   </a>
 
-  <a mat-list-item routerLink="/settings" class="!text-white" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+  <a mat-list-item routerLink="/settings" class="!text-white" routerLinkActive="active-link"
+    [routerLinkActiveOptions]="{ exact: false  }">
     <mat-icon class="mr-2 !text-white">settings</mat-icon>
     <span class="-mt-4 !text-white">Settings</span>
   </a>
