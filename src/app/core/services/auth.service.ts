@@ -9,12 +9,6 @@ import { LoginResponse } from '../interfaces/auth';
   providedIn: 'root'
 })
 export class AuthService {
-  private _isLoggedIn = new BehaviorSubject<boolean>(false);
-  public isLoggedIn$ = this._isLoggedIn.asObservable();
-
-  private _authChecked = new BehaviorSubject<boolean>(false);
-  public authChecked$ = this._authChecked.asObservable();
-
   constructor(
     private _httpClient: HttpClient,
     private _storageService: StorageService
@@ -48,12 +42,5 @@ export class AuthService {
   // check if user is logged in
   isLoggedIn(): boolean {
     return !!this.getToken();
-  }
-
-  // load user from storage on app init
-  loadUserFromStorage() {
-    const token = this.getToken();
-    this._isLoggedIn.next(!!token);
-    this._authChecked.next(true);
   }
 }
